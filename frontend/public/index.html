@@ -28,7 +28,19 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div class="repl" id="repl">
+      <strong><center><h1 class = "header" style="font-size: 50px"></p> Welcome to Recommend-A-Movie!</p></center></strong>
+      <strong><h2 class = "header" style="font-size: 20px"></p> Pick three movies you are in the mood to watch!</p></strong>
+      <!-- <p style="background-image: url('oar.png');"> -->
+      <!-- <img id = "background" src="oar.png"> -->
+      <!-- Prepare a region of the page to hold the command history -->
+      <!-- Prepare a region of the page to hold the command input box -->
+      <div class="repl-input">
+        <input type="text" class="search-box" placeholder="Enter a movie title here!">
+      </div>
+      <div class="repl-history">
+      </div>
+  </div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -40,4 +52,4 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
-</html> -->
+</html>

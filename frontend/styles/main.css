@@ -1,0 +1,40 @@
+/*
+  This is a reasonable starting point for the CSS in Sprint 1.
+  Positioning in CSS can sometimes be annoying to manage, so we've opted to 
+  give you this starter CSS. Feel free to modify it as you wish, though.
+
+  1130px is all the way to the right
+*/
+
+.repl {
+    position:relative;
+    min-height:95vh;   
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/8/83/Brown_University_Boat_Club_Rowing_Blade.svg"); 
+    background-size: cover;
+    background-position-x: -35px;
+}
+
+.repl-input {        
+    margin: auto;    
+}
+
+.search-box {
+    width: 50%;
+    margin: auto;
+    margin-left: 125px;
+}
+
+.header {
+    color: deepskyblue;
+}
+
+.suggestion {
+    cursor: pointer;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.suggestion:hover{
+    background-color: lightblue;
+}
