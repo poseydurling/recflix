@@ -9,19 +9,21 @@
 .repl {
     position:relative;
     min-height:95vh;   
-    background-image: url("https://upload.wikimedia.org/wikipedia/commons/8/83/Brown_University_Boat_Club_Rowing_Blade.svg"); 
-    background-size: cover;
-    background-position-x: -35px;
 }
 
 .repl-input {        
-    margin: auto;    
+    margin: auto; 
+}
+
+.img {
+    margin-top: 0px;
 }
 
 .search-box {
-    width: 50%;
+    width: 10%;
     margin: auto;
     margin-left: 125px;
+    height: 20px;
 }
 
 .header {
@@ -30,11 +32,29 @@
 
 .suggestion {
     cursor: pointer;
-    border-right: 1px solid black;
-    border-left: 1px solid black;
-    border-bottom: 1px solid black;
+    border-right: 1px solid navy;
+    border-left: 1px solid navy;
+    border-bottom: 1px solid navy;
 }
 
 .suggestion:hover{
     background-color: lightblue;
+}
+
+.movie-1 {
+    width: 20%;  
+    margin: auto;
+    margin-left: 125px;
+}
+
+.movie-2 {
+    width: 20%;            
+    margin: auto;
+    margin-right: 0px;
+}
+
+.movie-3 {
+    width: 20%;            
+    margin: auto;
+    margin-right: 0px;
 }

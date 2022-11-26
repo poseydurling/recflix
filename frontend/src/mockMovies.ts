@@ -1,0 +1,1 @@
+export const movies = ["The Titanic", "The Wizard of Oz", "Divergent", "Hannah Montana: The Movie"]

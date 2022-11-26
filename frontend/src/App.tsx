@@ -11,7 +11,8 @@ function App() {
   const [suggestions, setSuggestions] = useState([]);
   useEffect(() => {
     const loadUsers = async () => {
-      const response = await axios.get('put api here');
+      const response = await axios.get('mockMovies.ts');
+      console.log(response)
       //axios.get('put api here');
       setUsers(response.data.data)
     }
