@@ -1,42 +1,32 @@
 import { SetStateAction, useEffect, useState } from "react";
 
-// //https://www.youtube.com/watch?v=Q2aky3eeO40
+var search_terms = ['apple', 'apple watch', 'apple macbook', 'apple macbook pro', 'iphone', 'iphone 12'];
 
-// export default function autocompleteSearch() {
-//     const [users, setUsers] = useState([]);
-//     const [text, setText] = useState('');
-//     const [suggestions, setSuggestions] = useState([]);
-//     useEffect(() => {
-//     const loadUsers = async () => {
-//       const response = await fetch('put api here');
-//       //axios.get('put api here');
-//       setUsers(response.data.data)
-//     }
-//     loadUsers();
-//     }, [])
-//     const onChangeHandler = (text: SetStateAction<string>)=>{
-//         let matches = []
-//         if(text.length>0){
-//             matches = users.filter(user=>{
-//             const regex = new RegExp('${text}', "gi");
-//             return users.email.match(regex)
-//         })
-//     }
-//     setSuggestions(matches);
-//     setText(text)
-//   }
+export function autocompleteMatch(input: string | RegExp) {
+  if (input == '') {
+    return [];
+  }
+  var reg = new RegExp(input)
+  return search_terms.filter(function(term) {
+	  if (term.match(reg)) {
+  	  return term;
+	  }
+  });
+}
 
-//     return (
-//         <div className="container">
-//          <input type="text" className="search-box" placeholder="Enter a movie title here!"
-//           onChange = {e => onChangeHandler(e.target.value)}
-//           value={text}
-//         />
-//           {suggestions && suggestions.map((suggestion,i) =>
-//           <div key={i} className="col-md-12 justify-contend-md-center"> {suggestion.email} </div>
-//         )}
-//         </div>
-//     );
-// }
-
-// export {autocompleteSearch}
+function showResults(val: string | RegExp) {
+  const res = document.getElementById("result");
+  if(res === null) {
+    console.log("Couldn't find input element")
+  } else if(!(res instanceof HTMLInputElement)) { 
+    console.log(`Found element ${res}, but it wasn't an input`)
+  } else {
+    res.innerHTML = '';
+    let list = '';
+    let terms = autocompleteMatch(val);
+    for (let i=0; i<terms.length; i++) {
+      list += '<li>' + terms[i] + '</li>';
+    }
+    res.innerHTML = '<ul>' + list + '</ul>';
+  }
+}

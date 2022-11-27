@@ -1,1 +1,5 @@
-export const movies = ["The Titanic", "The Wizard of Oz", "Divergent", "Hannah Montana: The Movie"]
+export const movies =
+
+{"array": ["The Titanic", "Harry Potter", "Hannah Montana", "The Hunger Games"]
+}
+// Erica Song - esong18, JP
