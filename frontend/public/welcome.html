@@ -54,6 +54,8 @@
       <!-- Prepare a region of the page to hold the command input box -->
       <div class="repl-input">
           <input type="text" id="search-box" placeholder="Enter a movie title here!" style="width:100%">
+          <script type = "text/javascript" src="Recommendation.js"></script>  
+          <button type="submit" class="submit1" onClick="handleSubmitClick()" onClick="loadMovieImage(document.getElementById('search-box').value)" style="color: navy;">Submit</button>
       </div>
 
 
@@ -66,7 +68,17 @@
           <div class="movie-3" style="background-color: lightgrey ; width: 20%; height: 400px; margin-left: 72%; margin-top: -400px;">
           </div>
           <br>
-        <center><img id="img" src="https://cdn-icons-png.flaticon.com/512/860/860829.png" width="25" height="25" ></img></center>
+          <script type = "text/javascript" src="Recommendation.js"></script>  
+        <button class="trash1" onClick="handleTrashClick()" style="margin-left: 17%; margin-top: -30px">
+          <img src="https://cdn-icons-png.flaticon.com/512/860/860829.png" width="25" height="25" />
+        </button>
+        <center><button class="trash2" onClick="handleTrashClick()" width="25" height="25" style="margin-top: 0px">
+          <img src="https://cdn-icons-png.flaticon.com/512/860/860829.png" width="25" height="25" />
+        </button></center>
+        <button class="trash3" onClick="handleTrashClick()" style="margin-left: 82%; margin-top: -30px" >
+          <img src="https://cdn-icons-png.flaticon.com/512/860/860829.png" width="25" height="25" />
+        </button>
+        <br>
         <br>
         <center><button type="submit" onClick="parent.location='recommendation.html'" style="color: navy;">Recommend-A-Movie!</button></center>
   </div>
