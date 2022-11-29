@@ -1,3 +1,5 @@
+import { posterPath } from './Media'
+
 var submitCount = 0;
 
 function loadMovieImage(movieName : String){
@@ -12,8 +14,9 @@ function loadMovieImage(movieName : String){
         console.log("movie number cannot be found based on submit clicks")
     }
     const newClass = document.getElementsByClassName(movieNumber)
-    const input1 = document.createElement('div')
+    const input1 = document.createElement('img')
     //get the image of the movie using the string passed in
+    input1.src = "https://image.tmdb.org/t/p/original/" + posterPath(movieName);
     input1.style.backgroundImage = "https://cdn-icons-png.flaticon.com/512/860/860829.png";
     if(movieNumber == 'movie-1'){
         input1.style.width = "20%";

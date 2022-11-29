@@ -1,22 +1,21 @@
 import { myKey } from '../private/key';
 import { FeatureCollection } from "geojson";
 
-function getMovieData(): Promise<GeoJSON.FeatureCollection | undefined> {
-    const dataResponse: Promise<GeoJSON.FeatureCollection | undefined> = fetch(`https://api.themoviedb.org/3/movie/550?api_key=${myKey}`)
-    .then((resp) => resp.json())
-    .then((json) => {
-        if (isFeatureCollection(json.data)) {
-            console.log(json.data); 
-            return json.data
-          } else {
-            console.log("Undefined data")
-            return undefined
-          }})
-    return dataResponse;
+async function getMovie(movieName : String): Promise<string> {
+  const movieTitle = movieName.replace(" ", "+");
+  return await fetch('https://api.themoviedb.org/3/movie/157336?api_key=${myKey}&language=en-US&query=${movieTitle}')
+      .then(response =>  {
+          // return response.json()
+          let statsResp = response.json()
+          return statsResp.then(data => {
+              let respType = data.response_type;
+              if (respType === "success") {
+                console.log(data)
+                  return data.poster_path //formats correctly
+              } else{
+                  return "Oops! Cannot access poster picture!"
+              }
+      } )})
 }
 
-export function isFeatureCollection(json: any): json is FeatureCollection {
-  return json.type === "FeatureCollection"
-}
-
-export {getMovieData}
+export {getMovie}
