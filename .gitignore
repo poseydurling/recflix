@@ -1,7 +1,12 @@
 node_modules
 *.iml
 target
+
+# IntelliJ IDEA files
 .idea
+
+# macOS files 
 .DS_Store
 
-private/*
+# env variables
+frontend/src/private/*
