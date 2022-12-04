@@ -44,19 +44,6 @@ function loadMovieImage(movieName : String){
     }
 }
 
-function handleSubmitClick() {
-    const maybeSubmit: HTMLCollectionOf<Element> = document.getElementsByClassName('submit1')
-    const submit: Element | null = maybeSubmit.item(0)
-    if(submit === null) {
-        console.log("Couldn't find input element")
-    } else if(!(submit instanceof HTMLInputElement)) {
-        console.log(`Found element ${submit}, but it wasn't an input`)
-    } else {
-        submitCount = submitCount + 1;
-        return console.log("+1 submit")
-    }
-}
-
 function handleTrashClick() {
     const maybeTrash1: HTMLCollectionOf<Element> = document.getElementsByClassName('trash1')
     const trash1: Element | null = maybeTrash1.item(0)
@@ -79,4 +66,4 @@ function handleTrashClick() {
     }
 }
 
-export {handleTrashClick, handleSubmitClick, loadMovieImage};
+export {handleTrashClick, loadMovieImage};

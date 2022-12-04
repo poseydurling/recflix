@@ -1,14 +1,39 @@
-  
-  <!-- https://jqueryui.com/autocomplete/ -->
-  
-  <title>React App</title>
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <!-- <link rel="manifest" href="%PUBLIC_URL%/manifest.json" /> -->
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>React App</title>  
   </head>
 
-  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="../styles/main.css" type="text/css">
   <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="/resources/demos/style.css">
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+
+  <!-- https://jqueryui.com/autocomplete/  -->
 
   <script>
     $( function() {
@@ -41,7 +66,6 @@
       });
     } );
     </script>
-
   <body>
 
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -52,10 +76,19 @@
       <!-- <img id = "background" src="oar.png"> -->
       <!-- Prepare a region of the page to hold the command history -->
       <!-- Prepare a region of the page to hold the command input box -->
-      <div class="repl-input">
+      <!-- <form id="formSubmission">
+        <input type="text" placeholder="Enter something..." id="inputData" />
+        <input type="submit" />
+        </form>
+        <h1 id="valueHolder"></h1> -->
+        <div id="repl-input">
           <input type="text" id="search-box" placeholder="Enter a movie title here!" style="width:100%">
-          <script type = "text/javascript" src="Recommendation.js"></script>  
-          <button type="submit" class="submit1" onClick="handleSubmitClick()" onClick="getMovie(document.getElementById('search-box').value)" style="color: navy;">Submit</button>
+          <script type = "text/javascript" src="Search.tsx"></script>  
+          <button type="submit" class="submit1" style="color: navy;">Search</button>
+          <!-- <div class="repl-input">
+            <input type="text" class="repl-command-box" placeholder="Enter Command Here!">
+        </div>
+        <button type="button" id="repl-submit-buttion" >  Submit </button> -->
       </div>
 
 
@@ -69,13 +102,13 @@
           </div>
           <br>
           <script type = "text/javascript" src="Recommendation.js"></script>  
-        <button class="trash1" onClick="handleTrashClick()" style="margin-left: 17%; margin-top: -30px">
+        <button class="trash1" onClick="handleTrashClick()" style="margin-left: 17%; margin-top: 20px">
           <img src="https://cdn-icons-png.flaticon.com/512/860/860829.png" width="25" height="25" />
         </button>
-        <center><button class="trash2" onClick="handleTrashClick()" width="25" height="25" style="margin-top: 0px">
+        <center><button class="trash2" onClick="handleTrashClick()" width="25" height="25" style="margin-top: -30px;">
           <img src="https://cdn-icons-png.flaticon.com/512/860/860829.png" width="25" height="25" />
         </button></center>
-        <button class="trash3" onClick="handleTrashClick()" style="margin-left: 82%; margin-top: -30px" >
+        <button class="trash3" onClick="handleTrashClick()" style="margin-left: 82%; margin-top: -35px" >
           <img src="https://cdn-icons-png.flaticon.com/512/860/860829.png" width="25" height="25" />
         </button>
         <br>
