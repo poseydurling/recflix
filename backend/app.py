@@ -28,8 +28,12 @@ def handle_exception(err):
     return jsonify(response), err.code
 
 
-@app.route("/recommendation/", methods=['GET'])
-def get_recommendation():
+@app.route("/recommendations/", methods=['GET'])
+def get_recommendations():
+    """
+    Returns a JSON  containing a list of movie recommendations given three
+    examples
+    """
     example1 = request.args.get("example1")
     example2 = request.args.get("example2")
     example3 = request.args.get("example3")
@@ -39,7 +43,7 @@ def get_recommendation():
     app.logger.info(example1)
     app.logger.info(example2)
     app.logger.info(example3)
-    return jsonify({"movie_id": 671})
+    return jsonify({"recommendation_ids": [671]})
 
 
 @app.route("/titles_to_ids/", methods=['GET'])
