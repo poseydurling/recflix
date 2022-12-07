@@ -5,8 +5,15 @@ target
 # IntelliJ IDEA files
 .idea
 
+# VS Code files
+.vscode/
+__pycache__
+
 # macOS files 
 .DS_Store
 
 # env variables
 frontend/src/private/*
+
+# Virtual environment
+env/
