@@ -43,7 +43,8 @@ def get_recommendations():
     app.logger.info(example1)
     app.logger.info(example2)
     app.logger.info(example3)
-    return jsonify({"recommendation_ids": [671]})
+    return jsonify({"recommendation_ids":
+                    [671, 5, 11, 12, 13, 14, 16, 18, 19, 20]})
 
 
 @app.route("/titles_to_ids/", methods=['GET'])
