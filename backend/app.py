@@ -29,20 +29,20 @@ def get_recommendation():
     return jsonify({"movie_id": 671})
 
 
-@app.route("/movie_titles/", methods=['GET'])
-def get_movie_titles():
-    return jsonify([
-        "Avatar",
-        "Pirates of the Caribbean: At World's End",
-        "Spectre",
-        "The Dark Knight Rises",
-        "John Carter",
-        "Spider-Man 3",
-        "Tangled",
-        "Avengers: Age of Ultron",
-        "Harry Potter and the Half-Blood Prince",
-        "Batman v Superman: Dawn of Justice"
-        ])
+@app.route("/titles_to_ids/", methods=['GET'])
+def get_titles_to_ids():
+    return jsonify({
+        "Avatar": 19995,
+        "Pirates of the Caribbean: At World's End": 285,
+        "Spectre": 206647,
+        "The Dark Knight Rises": 49026,
+        "John Carter": 49529,
+        "Spider-Man 3": 559,
+        "Tangled": 38757,
+        "Avengers: Age of Ultron": 99861,
+        "Harry Potter and the Half-Blood Prince": 767,
+        "Batman v Superman: Dawn of Justice": 209112
+        })
 
 
 if __name__ == "__main__":
