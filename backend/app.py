@@ -23,7 +23,7 @@ class BadRequestError(ResponseError):
 
 @app.errorhandler(ResponseError)
 def handle_exception(err):
-    """Return custom JSON when ResponseError or its children are raised"""
+    """Returns a JSON when ResponseError or its children are raised"""
     response = {"error": err.description}
     return jsonify(response), err.code
 
@@ -48,6 +48,7 @@ def get_recommendations():
 
 @app.route("/titles_to_ids/", methods=['GET'])
 def get_titles_to_ids():
+    """Return JSON containing every movie title and its corresponding id"""
     return jsonify({
         "Avatar": 19995,
         "Pirates of the Caribbean: At World's End": 285,
