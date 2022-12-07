@@ -2,6 +2,27 @@ from flask import Flask, jsonify
 
 app = Flask(__name__)
 
+# errors
+
+
+class ResponseError(Exception):
+    pass
+
+
+class BadRequestError(ResponseError):
+    code = 400
+    description = ("the request was missing a needed field, or the field was"
+                   " ill-formed")
+
+
+# handlers
+
+
+@app.errorhandler(ResponseError)
+def handle_exception(err):
+    """Return custom JSON when ResponseError or its children are raised"""
+    response = {"error": err.description}
+    return jsonify(response), err.code
 
 @app.route("/recommendation/", methods=['GET'])
 def get_recommendation():
