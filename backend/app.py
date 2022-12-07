@@ -1,6 +1,9 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
+import logging
 
 app = Flask(__name__)
+
+logging.basicConfig(level=logging.INFO)
 
 # errors
 
@@ -24,8 +27,18 @@ def handle_exception(err):
     response = {"error": err.description}
     return jsonify(response), err.code
 
+
 @app.route("/recommendation/", methods=['GET'])
 def get_recommendation():
+    example1 = request.args.get("example1")
+    example2 = request.args.get("example2")
+    example3 = request.args.get("example3")
+    # raise error if one or more examples are null
+    if not example1 or not example2 or not example3:
+        raise BadRequestError
+    app.logger.info(example1)
+    app.logger.info(example2)
+    app.logger.info(example3)
     return jsonify({"movie_id": 671})
 
 
