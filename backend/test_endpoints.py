@@ -6,10 +6,11 @@ from app import app
 def client():
     app.testing = True
     client = app.test_client()
-    yield client
+    return client
 
 
 def test_titles_to_ids(client):
+    """Tests the /titles_to_ids endpoint in the API"""
     response = client.get("http://127.0.0.1:5000/titles_to_ids/")
     for title, id in response.json.items():
         # check that each movie title is a str
@@ -21,6 +22,7 @@ def test_titles_to_ids(client):
 
 
 def test_get_recommendations(client):
+    """Tests the /recommendations endpoint in the API"""
     response = client.post(
         "http://127.0.0.1:5000/recommendations/",
         json={"example1": 100, "example2": 200, "example3": 302},
