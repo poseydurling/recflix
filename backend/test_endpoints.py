@@ -12,7 +12,7 @@ def client():
 def test_titles_to_ids(client):
     """Tests the /titles_to_ids endpoint in the API"""
     response = client.get("http://127.0.0.1:5000/titles_to_ids/")
-    for title, id in response.json.items():
+    for title, id in response.json["data"].items():
         # check that each movie title is a str
         assert type(title) == str
         # check that each movie id is an int
@@ -27,11 +27,20 @@ def test_get_recommendations(client):
         "http://127.0.0.1:5000/recommendations/",
         json={"example1": 100, "example2": 200, "example3": 302},
     )
-    recommendation_ids: list[int] = response.json["recommendation_ids"]
+    assert response.json["status"] == "success"
+    data: list[int] = response.json["data"]
     # check that the list contains ten recommendations
-    assert len(recommendation_ids) == 10
-    for id in recommendation_ids:
+    assert len(data) == 10
+    for id in data:
         # check that each movie id is an int
         assert type(id) == int
         # check that each movie id is within the range of possible movie ids
         assert id >= 5 and id <= 459488
+
+    # bad request
+    response = client.post(
+        "http://127.0.0.1:5000/recommendations/",
+        json={"example1": 100, "example2": 200},
+    )
+    assert response.json["status"] == "error"
+    assert response.json["code"] == 400
