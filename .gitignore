@@ -8,6 +8,7 @@ target
 # VS Code files
 .vscode/
 __pycache__
+.pytest_cache/
 
 # macOS files 
 .DS_Store
