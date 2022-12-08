@@ -30,28 +30,29 @@ def handle_exception(err):
     return jsonify(response), err.code
 
 
-@app.route("/recommendations/", methods=['GET'])
+@app.route("/recommendations/", methods=['POST'])
 def get_recommendations():
     """
     Returns a JSON  containing a list of movie recommendations given three
     examples
     """
-    example1 = request.args.get("example1")
-    example2 = request.args.get("example2")
-    example3 = request.args.get("example3")
+    # expect POST request content type to be application/json
+    example1 = request.json.get("example1")
+    example2 = request.json.get("example2")
+    example3 = request.json.get("example3")
     # raise error if one or more examples are null
     if not example1 or not example2 or not example3:
         raise BadRequestError
-    app.logger.info(example1)
-    app.logger.info(example2)
-    app.logger.info(example3)
+    app.logger.info(f"Example 1: {example1}")
+    app.logger.info(f"Example 2: {example2}")
+    app.logger.info(f"Example 3: {example3}")
     return jsonify({"recommendation_ids":
                     [671, 5, 11, 12, 13, 14, 16, 18, 19, 20]})
 
 
 @app.route("/titles_to_ids/", methods=['GET'])
 def get_titles_to_ids():
-    """Return JSON containing every movie title and its corresponding id"""
+    """Returns a JSON containing every movie title and its corresponding id"""
     return jsonify({
         "Avatar": 19995,
         "Pirates of the Caribbean: At World's End": 285,
