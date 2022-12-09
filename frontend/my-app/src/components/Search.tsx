@@ -1,6 +1,6 @@
-import {getMovieAutocomplete} from "../controller/Search"
+import {getAllMovies, getMovieAutocomplete} from "../controller/Search"
 import {useState} from "react";
-import JqueryReactAutocomplete from "jquery-react-autocomplete";
+//import JqueryReactAutocomplete from "jquery-react-autocomplete";
 
 export default function search(){
     const [search, setSearch] = useState('');
@@ -14,7 +14,10 @@ export default function search(){
 
 function registerAutocomplete(search: String) {
       var availableTitles = () => {getMovieAutocomplete(search)};
-      $( "#search-box" ).autocomplete({
-        source: availableTitles
-      });
+    //   $( "#search-box" ).autocomplete({
+    //     source: availableTitles
+
+    //   });
+
+    getAllMovies()
 }
