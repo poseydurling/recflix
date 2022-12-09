@@ -1,11 +1,13 @@
 import logging
-from flask import Flask, jsonify, request
+from flask import Flask, request
+from flask_cors import CORS
 from response_error import ResponseError, BadRequestError
 
 
 logging.basicConfig(level=logging.INFO)
 
 app = Flask(__name__)
+CORS(app)
 
 
 # handlers
