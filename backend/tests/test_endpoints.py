@@ -1,5 +1,5 @@
 import pytest
-from app import app
+from server.app import app
 
 
 @pytest.fixture
@@ -18,7 +18,7 @@ def test_titles_to_ids(client):
         # check that each movie id is an int
         assert type(id) == int
         # check that each movie id is within the range of possible ids
-        assert id >= 5 and id <= 459488
+        assert 5 <= id <= 459488
 
 
 def test_get_recommendations(client):
@@ -35,7 +35,7 @@ def test_get_recommendations(client):
         # check that each movie id is an int
         assert type(id) == int
         # check that each movie id is within the range of possible movie ids
-        assert id >= 5 and id <= 459488
+        assert 5 <= id <= 459488
 
     # bad request
     response = client.post(

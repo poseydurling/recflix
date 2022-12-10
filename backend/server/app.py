@@ -1,8 +1,8 @@
 import logging
 from flask import Flask, request
 from flask_cors import CORS
-from response_error import ResponseError, BadRequestError
-
+from server.response_error import ResponseError, BadRequestError
+from csv import DictReader
 
 logging.basicConfig(level=logging.INFO)
 
@@ -41,21 +41,14 @@ def get_recommendations():
 @app.route("/titles_to_ids/", methods=["GET"])
 def get_titles_to_ids():
     """Returns a JSON containing every movie title and its corresponding id"""
-    return {
-        "status": "success",
-        "data": {
-            "Avatar": 19995,
-            "Pirates of the Caribbean: At World's End": 285,
-            "Spectre": 206647,
-            "The Dark Knight Rises": 49026,
-            "John Carter": 49529,
-            "Spider-Man 3": 559,
-            "Tangled": 38757,
-            "Avengers: Age of Ultron": 99861,
-            "Harry Potter and the Half-Blood Prince": 767,
-            "Batman v Superman: Dawn of Justice": 209112,
-        },
-    }
+    titles_to_ids: dict[str, int] = {}
+    with open("data/tmdb_5000_movies.csv") as csv:
+        reader = DictReader(csv)
+        for row in reader:
+            title = row["original_title"]
+            id = row["id"]
+            titles_to_ids[title] = int(id)
+    return {"status": "success", "data": titles_to_ids}
 
 
 if __name__ == "__main__":
