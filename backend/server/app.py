@@ -1,8 +1,11 @@
+import sys
+
+sys.path.append("./")
 import logging
 from flask import Flask, request
 from flask_cors import CORS
-from server.response_error import ResponseError, BadRequestError
 from csv import DictReader
+from server.response_error import ResponseError, BadRequestError
 
 logging.basicConfig(level=logging.INFO)
 
