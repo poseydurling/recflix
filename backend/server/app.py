@@ -26,9 +26,9 @@ def get_recommendations():
     examples
     """
     # expect POST request content type to be application/json
-    example1 = request.json.get("example1")
-    example2 = request.json.get("example2")
-    example3 = request.json.get("example3")
+    example1: str = request.json.get("example1")
+    example2: str = request.json.get("example2")
+    example3: str = request.json.get("example3")
     # raise error if one or more examples are null
     if not example1 or not example2 or not example3:
         raise BadRequestError
@@ -45,9 +45,9 @@ def get_titles_to_ids():
     with open("data/tmdb_5000_movies.csv") as csv:
         reader = DictReader(csv)
         for row in reader:
-            title = row["original_title"]
-            id = row["id"]
-            titles_to_ids[title] = int(id)
+            title: str = row["original_title"]
+            id: int = int(row["id"])
+            titles_to_ids[title] = id
     return {"status": "success", "data": titles_to_ids}
 
 
