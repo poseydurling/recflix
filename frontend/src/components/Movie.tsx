@@ -4,3 +4,7 @@ export default function Movie(props: any){
         <div id="movieCard1"></div>
     )
 }
+
+export function uploadPoster(){
+
+}
