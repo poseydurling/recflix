@@ -5,6 +5,9 @@ let finalDataStructure = new Map()
 let keys  = new Array() 
 keys.push(finalDataStructure.keys())
 //cedric sprint 3
+interface DB {
+  [name: string]: number;
+}
 
 export async function getAllMovies(){
   const response = await fetch('http://127.0.0.1:5000/titles_to_ids/')
@@ -66,4 +69,14 @@ export async function serializeMovies(){
 
 export function usersMovies(){
   //create a list of movie IDs wnated by users
+}
+
+export function getMovieAutocomplete(name:String){
+  //change this local host once backend is done
+  console.log(getAllMovies)
+  // await fetch(`http://localhost:3232/getMap?minLat=${name}`)
+  // .then(response => response.json())
+  // .then(json => {
+  //   data = json["title"]
+  // })
 }
