@@ -2,7 +2,7 @@ import {getAllMovies, getMovieAutocomplete} from "../controller/Search"
 import {useState} from "react";
 //import JqueryReactAutocomplete from "jquery-react-autocomplete";
 
-export default function search(){
+export default function Search(){
     const [search, setSearch] = useState('');
     return (
         <div>
