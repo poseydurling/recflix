@@ -12,7 +12,6 @@ interface DB {
 export async function getAllMovies(){
   const response = await fetch('http://127.0.0.1:5000/titles_to_ids/')
   const moviedata = await response.json()
-
   return moviedata.data;
 }
 
@@ -30,14 +29,30 @@ export async function getAllMovies(){
 // }
 var datadb: (DB|null) = null;
 
+//gets id of the movie
 export async function searchTitle(name:string){
+  if(datadb === null){
+    let datadb = await deserialize() as DB
+    const id = datadb[name]
+    console.log(datadb)
+    await sendPost(id)
+    return datadb[name] 
+  }
+}
+
+export async function deserialize(){
   if(datadb === null) {
-    datadb = await getAllMovies() as DB
-  } 
-  const id = datadb[name]
-  console.log(datadb)
-  await sendPost(id)
-  return datadb[name]   
+    return datadb = await getAllMovies() as DB
+  }
+}
+
+export function getAutocompleteList(){
+  deserialize();
+  if(datadb != null) {
+    console.log(datadb.name)
+    //map.key
+    return datadb.name.toString();
+  }
 }
 
 export async function serializeMovies(){
