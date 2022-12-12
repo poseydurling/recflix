@@ -1,15 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import Form from './views/Form';
 import reportWebVitals from './reportWebVitals';
+import App from './App';
+import Form from './views/Form';
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+console.log("Check if rendeirng is being called here");
 root.render(
   <React.StrictMode>
-    <Form />
+    <App/>
   </React.StrictMode>
 );
 

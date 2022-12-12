@@ -1,4 +1,4 @@
-import { myKey } from '../private/key';
+import { myKey } from '../private/key'
 
 // async function getMovie(movieName : String): Promise<string> {
 //   const movieTitle = movieName.replace(" ", "+");

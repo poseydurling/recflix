@@ -1,7 +1,7 @@
 import {getAllMovies, getAutocompleteList} from "../controller/Search"
 import {useState} from "react";
-import { AutoComplete } from 'rsuite'
-import 'rsuite/dist/rsuite.min.css';
+// import { AutoComplete } from 'rsuite'
+// import 'rsuite/dist/rsuite.min.css';
 import loadMovieImage from "../controller/Recommendation"
 
 //https://rsuitejs.com/components/auto-complete/
@@ -18,7 +18,8 @@ export default function Search(){
     return (    
         <div>
             {/* onChange={(event) => {setSearch(event.target.value)}} */} 
-            <AutoComplete style={{width: '100%'}} id="search-box" placeholder="Enter a movie title here!" data={availableTitles} value={search} onChange={handleChange}/>
+           {/* <AutoComplete style={{width: '100%'}} id="search-box" placeholder="Enter a movie title here!" data={availableTitles} value={search} onChange={handleChange}/>
+           */}
             <button type="submit" id="submit1" onClick={() => {getAutocompleteList()}}>Search</button>
         </div>
     )
