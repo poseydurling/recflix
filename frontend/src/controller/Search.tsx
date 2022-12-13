@@ -1,8 +1,14 @@
 import { sendPost } from "../components/RecommendButton";
+import { keys } from 'ts-transformer-keys';
 
 interface DB {
   [name: string]: number;
 }
+
+
+
+
+
 
 //get master list of all movie titles to IDs
 export async function getAllMovies(){
@@ -12,10 +18,25 @@ export async function getAllMovies(){
   return moviedata.data;
 }
 
+
+
+
 let movieID = [0,0,0]; //three user inputted movie IDs
 let movieIndex = 0; //movId index
 let movieCount = 0; //counts for number of searched movies
 var dataDB: (DB|null) = null;
+
+
+
+export async function getMovieTitlesFromMap(){
+  dataDB = await getAllMovies() as DB
+const keysOfProps = keys<DB>();
+console.log(keysOfProps); 
+}
+
+
+
+
 
 export async function searchTitle(name:string){
   //if there's no user input --> alert user

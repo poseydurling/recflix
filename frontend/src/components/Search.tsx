@@ -3,6 +3,7 @@ import {useState} from "react";
 import { AutoComplete } from 'rsuite'
 import 'rsuite/dist/rsuite.min.css';
 import loadMovieImage from "../controller/Recommendation"
+import { getMovieTitlesFromMap } from "../controller/Search";
 
 //https://rsuitejs.com/components/auto-complete/
 //https://blog.devgenius.io/getting-started-with-react-development-with-the-react-suite-library-autocomplete-and-toggle-169701dbb8c7
@@ -17,7 +18,7 @@ export default function Search(){
     return (    
         <div>
             {/* onChange={(event) => {setSearch(event.target.value)}} */} 
-           <AutoComplete style={{width: '100%'}} id="search-box" placeholder="Enter a movie title here!" data={options} value={search} onChange={handleChange}/>
+           <AutoComplete style={{width: '100%'}} id="search-box" placeholder="Enter a movie title here!" data={getMovieTitlesFromMap().toString()} value={search} onChange={handleChange}/>
             <button type="submit" id="submit1" onClick={() => {buildRecommendationsbySearch(search)/*getAutocompleteList()*/}}>Search</button>
         </div>
     )
