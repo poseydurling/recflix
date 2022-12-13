@@ -18,8 +18,8 @@ export default function Search(){
     return (    
         <div>
             {/* onChange={(event) => {setSearch(event.target.value)}} */} 
-           <AutoComplete style={{width: '100%'}} id="search-box" placeholder="Enter a movie title here!" data={options} value={search} onChange={handleChange}/>
-            <button type="submit" id="submit1" onClick={() => {getAutocompleteList()}}>Search</button>
+            <AutoComplete style={{width: '100%'}} id="search-box" placeholder="Enter a movie title here!" data={options} value={search} onChange={handleChange}/>
+            <button type="submit" id="submit1" onClick={() => {getAutocompleteList()}}>Search</button> 
         </div>
     )
 }
