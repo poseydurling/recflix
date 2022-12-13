@@ -2,6 +2,8 @@ import '../styles/main.css'
 import Movie from '../components/Movie'
 import NavBar from '../components/NavBar'
 import TryAgainButton from '../components/TryAgainButton'
+import NewRequestButton from '../components/NewRequestButton'
+// import NewRequestButton from '../components/newRequestButton'
 
 function Recommendation(){
     return (
@@ -10,6 +12,9 @@ function Recommendation(){
             <div>We recommend...</div>
                 <Movie></Movie>
             <TryAgainButton></TryAgainButton>
+            <NewRequestButton></NewRequestButton>
+            
+
         </div>
     )
 }
