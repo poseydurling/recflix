@@ -37,7 +37,12 @@ export async function searchTitle(name:string){
       const id = dataDB[name]
       movieID[movieIndex] = id
 
-      //check to make sure that user inputs three movies
+      //the following checks to make sure there are 3 movies is not based on number of 
+      //clicks on the search button but rather the search button triggers the
+      //fetches that populate the movieID list and based on what's in that list
+      //we check to see if three movies have been inputted
+
+      //check to make sure that user inputs three movies based on indices of array
       if(movieIndex == 2){
         movieIndex = 0
       } else {
