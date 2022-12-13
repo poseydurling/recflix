@@ -4,6 +4,7 @@ interface DB {
   [name: string]: number;
 }
 
+//get master list of all movie titles to IDs
 export async function getAllMovies(){
   const response = await fetch('http://127.0.0.1:5000/titles_to_ids/')
   const moviedata = await response.json()
@@ -11,37 +12,44 @@ export async function getAllMovies(){
   return moviedata.data;
 }
 
-let movId = [0,0,0]; //three user inputted movie IDs
-let movNum = 0; //movId index
-let movCnt = 0; //counts for number of searched movies
-var datadb: (DB|null) = null;
+let movieID = [0,0,0]; //three user inputted movie IDs
+let movieIndex = 0; //movId index
+let movieCount = 0; //counts for number of searched movies
+var dataDB: (DB|null) = null;
 
 export async function searchTitle(name:string){
+  //if there's no user input --> alert user
   if(name === ""){
     alert("No search input")
     return null;
   } else {
-    if(datadb === null) {
-      datadb = await getAllMovies() as DB
+    //make sure cache is empty
+    if(dataDB === null) {
+      //if it's empty get the master list of movies
+      dataDB = await getAllMovies() as DB
     }
 
-    if(datadb[name] == null) {
+    //throw alert if movie title doesn't exist
+    if(dataDB[name] == null) {
       alert("No match exist!")
       return null;
     } else {
-      const id = datadb[name]
-      movId[movNum] = id
-      if(movNum == 2){
-        movNum = 0
+      const id = dataDB[name]
+      movieID[movieIndex] = id
+
+      //check to make sure that user inputs three movies
+      if(movieIndex == 2){
+        movieIndex = 0
       } else {
-        movNum++
+        movieIndex++
       }
 
-      if(movCnt > 1) {
-        const rec_ret = await sendPost(movId)
-        return rec_ret
+      if(movieCount > 1) {
+        //if there are three movies then send post request
+        const recommendedOuput = await sendPost(movieID)
+        return recommendedOuput
       } else {
-        movCnt++
+        movieCount++
         return null
       }
     }
