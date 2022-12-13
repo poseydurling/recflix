@@ -2,6 +2,8 @@ import '../styles/main.css'
 import Movie from '../components/Movie'
 import NavBar from '../components/NavBar'
 import TryAgainButton from '../components/TryAgainButton'
+//import NewRequestButton from '../components/newRequestButton';
+import NewRequestButton from '../components/NewRequestButton';
 
 function NewRecommendation(){
     return (
@@ -10,6 +12,8 @@ function NewRecommendation(){
             <div>Our New Recommendation for You is..</div>
                 <Movie></Movie>
             <TryAgainButton></TryAgainButton>
+            <NewRequestButton></NewRequestButton>
+    
         </div>
     )
 }

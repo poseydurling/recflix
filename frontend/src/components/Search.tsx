@@ -1,7 +1,7 @@
 import {getAllMovies, searchTitle} from "../controller/Search"
 import {useState} from "react";
 import { AutoComplete } from 'rsuite'
-// import 'rsuite/dist/rsuite.min.css';
+import 'rsuite/dist/rsuite.min.css';
 import loadMovieImage from "../controller/Recommendation"
 
 //https://rsuitejs.com/components/auto-complete/
