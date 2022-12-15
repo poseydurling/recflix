@@ -1,5 +1,5 @@
 import pytest
-from server.recommend import (
+from src.recommender.recommender import (
     Recommender,
     get_director,
     get_names,
@@ -9,7 +9,7 @@ from server.recommend import (
 import pandas as pd
 import numpy as np
 
-from server.feature import Feature
+from src.recommender.feature import Feature
 
 
 def test_recommend():

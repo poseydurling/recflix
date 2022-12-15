@@ -1,11 +1,11 @@
-import sys
+# import sys
 
-sys.path.append("./")
+# sys.path.append("../../")
 import logging
 from flask import Flask, request
 from flask_cors import CORS
 from csv import DictReader
-from server.response_error import ResponseError, BadRequestError
+from src.server.response_error import ResponseError, BadRequestError
 
 logging.basicConfig(level=logging.INFO)
 
@@ -45,7 +45,7 @@ def get_recommendations():
 def get_titles_to_ids():
     """Returns a JSON containing every movie title and its corresponding id"""
     titles_to_ids: dict[str, int] = {}
-    with open("data/tmdb_5000_movies.csv") as csv:
+    with open("src/data/tmdb_5000_movies.csv") as csv:
         reader = DictReader(csv)
         for row in reader:
             title: str = row["original_title"]

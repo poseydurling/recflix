@@ -3,7 +3,7 @@ import numpy as np
 from ast import literal_eval
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-from server.feature import Feature
+from src.recommender.feature import Feature
 
 
 class Recommender:
@@ -16,7 +16,7 @@ class Recommender:
         if features:
             self.movies = construct_custom_dataset(features)
         else:
-            self.movies = pd.read_csv("data/tmdb_5000_default.csv")
+            self.movies = pd.read_csv("src/data/tmdb_5000_default.csv")
 
     def recommend(self, example1: int, example2: int, example3: int) -> list[int]:
         """
@@ -90,8 +90,8 @@ def construct_default_dataset():
     :return: None
     """
     # load the data
-    people = pd.read_csv("data/tmdb_5000_credits.csv")
-    movies = pd.read_csv("data/tmdb_5000_movies.csv")
+    people = pd.read_csv("src/data/tmdb_5000_credits.csv")
+    movies = pd.read_csv("src/data/tmdb_5000_movies.csv")
 
     # merge the two datasets
     people.columns = ["id", "tittle", "cast", "crew"]
@@ -117,7 +117,7 @@ def construct_default_dataset():
     # create a column containing a string with each movie's features
     movies["soup"] = movies.apply(create_soup, axis="columns")
 
-    movies.to_csv("data/tmdb_5000_default.csv", index=False)
+    movies.to_csv("src/data/tmdb_5000_default.csv", index=False)
 
 
 def construct_custom_dataset(features: set[Feature]):
@@ -127,8 +127,8 @@ def construct_custom_dataset(features: set[Feature]):
     :return: None
     """
     # load the data
-    people = pd.read_csv("data/tmdb_5000_credits.csv")
-    movies = pd.read_csv("data/tmdb_5000_movies.csv")
+    people = pd.read_csv("src/data/tmdb_5000_credits.csv")
+    movies = pd.read_csv("src/data/tmdb_5000_movies.csv")
 
     # merge the two datasets
     people.columns = ["id", "tittle", "cast", "crew"]
