@@ -2,7 +2,6 @@ import {getAllMovies, getMovieTitleList, searchTitle} from "../controller/Search
 import {useEffect, useState} from "react";
 import { AutoComplete } from 'rsuite'
 import 'rsuite/dist/rsuite.min.css';
-import loadMovieImage from "../controller/Recommendation"
 import { getMovieTitlesFromMap } from "../controller/Search";
 import { fetchPoster } from "../controller/Media";
 
@@ -29,7 +28,7 @@ export default function Search(props: any){
       const [card3, setcard3] = useState('');
     
       const handleSettingCard = async()=>{
-        const posterResponse1 = await fetchPoster(card1);
+        const posterResponse1 = await fetchPoster(search);
         setcard1(posterResponse1)
     
         const posterResponse2 = await fetchPoster(card2);
@@ -38,10 +37,6 @@ export default function Search(props: any){
         const posterResponse3 = await fetchPoster(card3);
         setcard3(posterResponse3)
       }
-
-
-
-
       useEffect(() => {
           movieName()})
     return (    
