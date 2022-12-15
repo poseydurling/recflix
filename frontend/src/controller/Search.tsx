@@ -6,10 +6,6 @@ interface DB {
 }
 
 
-
-
-
-
 //get master list of all movie titles to IDs
 export async function getAllMovies(){
   const response = await fetch('http://127.0.0.1:5000/titles_to_ids/')
@@ -30,8 +26,10 @@ var dataDB: (DB|null) = null;
 
 export async function getMovieTitlesFromMap(){
   dataDB = await getAllMovies() as DB
-const keysOfProps = keys<DB>();
-console.log(keysOfProps); 
+  const keysOfMovies = keys<DB>();
+  console.log(keysOfMovies);
+  
+  keysOfMovies.toString();
 }
 
 

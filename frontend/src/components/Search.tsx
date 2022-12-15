@@ -18,7 +18,7 @@ export default function Search(){
     return (    
         <div>
             {/* onChange={(event) => {setSearch(event.target.value)}} */} 
-           <AutoComplete style={{width: '100%'}} id="search-box" placeholder="Enter a movie title here!" data={getMovieTitlesFromMap().toString()} value={search} onChange={handleChange}/>
+           <AutoComplete style={{width: '100%'}} id="search-box" placeholder="Enter a movie title here!" data={getMovieTitlesFromMap()} value={search} onChange={handleChange}/>
             <button type="submit" id="submit1" onClick={() => {buildRecommendationsbySearch(search)/*getAutocompleteList()*/}}>Search</button>
         </div>
     )
