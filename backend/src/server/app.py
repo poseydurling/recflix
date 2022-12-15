@@ -1,6 +1,3 @@
-# import sys
-
-# sys.path.append("../../")
 import logging
 from flask import Flask, request
 from flask_cors import CORS
