@@ -6,6 +6,7 @@ from flask import Flask, request
 from flask_cors import CORS
 from csv import DictReader
 from src.server.response_error import ResponseError, BadRequestError
+from src.recommender.recommender import Recommender
 
 logging.basicConfig(level=logging.INFO)
 
@@ -38,7 +39,9 @@ def get_recommendations():
     app.logger.info(f"Example 1: {example1}")
     app.logger.info(f"Example 2: {example2}")
     app.logger.info(f"Example 3: {example3}")
-    return {"status": "success", "data": [671, 5, 11, 12, 13, 14, 16, 18, 19, 20]}
+    recommender = Recommender()
+    recommendations = recommender.recommend(example1, example2, example3)
+    return {"status": "success", "data": recommendations}
 
 
 @app.route("/titles_to_ids/", methods=["GET"])
