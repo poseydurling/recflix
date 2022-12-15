@@ -25,5 +25,6 @@ function Form(){
         </div>
       );
 }
+//make 3 props for the movie cards and make a prop for each link for the
 
 export default Form;
