@@ -40,7 +40,7 @@ export async function sendPost(movieId: number[]){
         },
         body: JSON.stringify({ "example1": movieId[0], "example2" : movieId[1], "example3": movieId[2]})
     })
-    console.log(rsp)
+   console.log(rsp)
     return await rsp.json()
 }
 
@@ -57,8 +57,8 @@ export async function getMovieInformation(recId : number[]){
             recommendTitle = data.original_title
             recommendRating = data.vote_average
             recommendDescrip = data.tagline
-            console.log(posterPath)
-            console.log(recommendTitle)
+        //    console.log(posterPath)
+        //    console.log(recommendTitle)
         })
     }
 }
@@ -67,5 +67,6 @@ export async function getMovieDetails(movid: number) {
     const url = "https://api.themoviedb.org/3/movie/"+movid+"?api_key=ca80130f34859e4807faeca3729ca13e&language=en-US"
     const response = await fetch(url)
     const movieinfo = await response.json()
+    console.log(movieinfo)
     return movieinfo
 }

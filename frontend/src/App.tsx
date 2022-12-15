@@ -5,30 +5,34 @@ import Form from './views/Form';
 import NewRecommendation from './views/NewRecommendation';
 import Recommendation from './views/Recommendation';
 import { fetchPoster } from './controller/Media';
-
-
+import {movieID} from './controller/Search'
 
 
 
 function App () {
-  // const [card1, setcard1] = useState('');
-  // const [card2, setcard2] = useState('');
-  // const [card3, setcard3] = useState('');
+  const [search, setSearch] = useState('');
+  const handleChange = (val: any) => {
+    setSearch(search);
+  }
 
-  // const handleSettingCard = async()=>{
-  //   const posterResponse1 = await fetchPoster(card1);
-  //   setcard1(posterResponse1)
+  const [card1, setcard1] = useState('');
+  const [card2, setcard2] = useState('');
+  const [card3, setcard3] = useState('');
 
-  //   const posterResponse2 = await fetchPoster(card2);
-  //   setcard2(posterResponse2)
+  const handleSettingCard = async()=>{
+    const posterResponse1 = await fetchPoster(search);
+    setcard1(posterResponse1)
 
-  //   const posterResponse3 = await fetchPoster(card3);
-  //   setcard3(posterResponse3)
-  // }
+    const posterResponse2 = await fetchPoster(search);
+    setcard2(posterResponse2)
+
+    const posterResponse3 = await fetchPoster(search);
+    setcard3(posterResponse3)
+  }
   return (
     <BrowserRouter>
       <Routes>
-        <Route path = "/" element={<Form/>} />
+        <Route path = "/" element={<Form card1={card1} card2={card2} card3={card3} onClick={handleSettingCard} search={search} setSearch={setSearch}/>} />
         <Route path="/recommendationPage" element={<Recommendation/>} />
         <Route path="/newRecommendationPage" element={<NewRecommendation/>} />
       </Routes>

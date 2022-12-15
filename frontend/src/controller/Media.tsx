@@ -1,5 +1,6 @@
 import { myKey } from '../private/key'
-import {movieID} from './Search'
+import { movieID } from './Search'
+
 
 // async function getMovie(movieName : String): Promise<string> {
 //   const movieTitle = movieName.replace(" ", "+");
@@ -19,24 +20,27 @@ import {movieID} from './Search'
 // }
 
 //cedric sprint 3
-
+//check asynch part of this function
 let fetchPoster = async function (movieName: String): Promise<string> {
   // const movieTitle = movieName.replace(" ", "+");
   // const response: Response = await fetch(`https://api.themoviedb.org/3/movie/157336?api_key=${myKey}&language=en-US&query=${movieTitle}`);
   // const data: JSON = await response.json();
-  const url = 'https://api.themoviedb.org/3/movie/'+movieID+'?api_key='+myKey+'&language=en-US&query='+movieName;
+  console.log("movieId in fetchposter: " + movieID)
+  const url = 'https://api.themoviedb.org/3/movie/' + movieID + '?api_key=' + myKey + '&language=en-US&query=' + movieName;
+  console.log(url);
   const response: Response = await fetch(url);
   const data = await response.json();
-  console.log(data)
-  let poster_path = data['poser_path']
-// let poster_path = data['backdrop_path']
-  console.log(poster_path)
+  // console.log(data)
+  let poster_path = data['poster_path']
   const full_path = "https://image.tmdb.org/t/p/original/" + poster_path
-  // console.log(full_path)
+  console.log(full_path)
+  // const posterUrl = full_path
+  // console.log(posterUrl);
+  // const posterResponse: Response = await fetch(posterUrl);
+  // const  posterData = await posterResponse.json();
   return (full_path);
 }
 
-export {fetchPoster}
-
+export { fetchPoster }
 
 //157336
