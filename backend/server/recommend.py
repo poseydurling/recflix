@@ -8,6 +8,11 @@ from server.feature import Feature
 
 class Recommender:
     def __init__(self, features: set[Feature] = None):
+        """
+        Constructor for the Recommender class
+
+        :param features: a set of features that will be considered in the recommendation algorithm
+        """
         if features:
             self.movies = construct_custom_dataset(features)
         else:
@@ -151,7 +156,12 @@ def construct_custom_dataset(features: set[Feature]):
 
 
 def get_director(cell):
-    """Gets the director's name from the crew feature if it exists"""
+    """
+    Get the director's name from the crew data
+
+    :param cell: a list containing crew data in dictionary format
+    :return: the name of the director if it exists, np.nan otherwise
+    """
     for person in cell:
         if person["job"] == "Director":
             return person["name"]
@@ -159,19 +169,29 @@ def get_director(cell):
 
 
 def get_names(cell) -> list:
-    """Returns a list of the top three names in a cell or the entire list; whichever is more"""
+    """
+    Return a list of the top three names in a cell or the entire list; whichever is more
+
+    :param cell: a list containing data in dictionary format
+    :return: a list of between zero and three names
+    """
     if isinstance(cell, list):
         names = [item["name"] for item in cell]
         # return the top three items in the list if possible
         if len(names) > 3:
             names = names[:3]
         return names
-    # return empty list in case of missing/malformed data
+    # return empty list if there is missing/malformed data
     return []
 
 
 def clean_data(cell):
-    """Converts all strings to lower case with no spaces"""
+    """
+    Convert all strings to lower case with no spaces
+
+    :param cell:  a list or string representing a feature
+    :return: the cell with every space removed and every letter lowercase
+    """
     if isinstance(cell, list):
         return [str.lower(item.replace(" ", "")) for item in cell]
     elif isinstance(cell, str):
@@ -181,7 +201,13 @@ def clean_data(cell):
 
 
 def create_soup(row, features) -> str:
-    """Compiles the cast, director, and genres features into a string for the provided row"""
+    """
+    Compile the provided features into a string for the provided row
+
+    :param row: a Series containing feature data for some movie
+    :param features: the set of features to be included in the soup
+    :return: a string containing the keywords of the provided features
+    """
     soup = ""
     if Feature.CAST in features:
         soup += " ".join(row["cast"]) + " "
@@ -189,6 +215,7 @@ def create_soup(row, features) -> str:
         soup += row["director"] + " "
     if Feature.GENRES in features:
         soup += " ".join(row["genres"])
+    # remove trailing spaces
     return soup.strip()
 
 
