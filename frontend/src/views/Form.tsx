@@ -5,7 +5,7 @@ import Search from '../components/Search'
 import RecommendButton from '../components/RecommendButton'
 import TrashIcon from '../components/TrashIcon'
 
-function Form(){
+function Form(props: any){
     return (
         <div className="App">
           <NavBar></NavBar>
@@ -14,9 +14,9 @@ function Form(){
                 <br></br>
                 <Search></Search>
                 <div className='movieCards'>
-                    <Movie id="movieCard1"/>
-                    <Movie id="movieCard2"/>
-                    <Movie id="movieCard3"/>
+                    <Movie card={props.card1} card2={props.card2} card3={props.card3}/>
+                    {/* <Movie id="movieCard2"/>
+                    <Movie id="movieCard3"/> */}
                     <TrashIcon/>
                     <TrashIcon/>
                     <TrashIcon/>

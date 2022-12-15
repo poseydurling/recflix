@@ -23,7 +23,9 @@ let fetchPoster = async function (movieName: String): Promise<string> {
   const movieTitle = movieName.replace(" ", "+");
   const response: Response = await fetch(`https://api.themoviedb.org/3/movie/157336?api_key=${myKey}&language=en-US&query=${movieTitle}`);
   const data: JSON = await response.json();
+  console.log(data)
   return JSON.stringify(data);
+
 }
 
 export {fetchPoster}
