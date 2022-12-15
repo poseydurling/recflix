@@ -1,3 +1,4 @@
+import pytest
 from server.recommend import recommend
 
 
@@ -10,6 +11,12 @@ def test_recommend():
         assert type(id) == int
         # check that each movie id is within the range of possible movie ids
         assert 5 <= id <= 459488
+
+    # check that invalid movie ids raise exception
+    with pytest.raises(ValueError):
+        recommend(-1, 100, 100)
+        recommend(100, -1, 100)
+        recommend(100, 100, -1)
 
 
 # TODO: test helper functions

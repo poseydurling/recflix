@@ -77,9 +77,13 @@ def create_soup(row) -> str:
 def recommend(example1: int, example2: int, example3: int) -> list[int]:
     """Computes a list of movie recommendations given three movie id examples"""
     # TODO: reduce # of calls to initialize()
-    # TODO: validate inputs
+
     # store the dataframe
     movies = initialize()
+
+    # validate inputs by rejecting ids that do not exist in the dataset
+    if not all(id in movies["id"].values for id in [example1, example2, example3]):
+        raise ValueError
 
     # initialize count vectorizer object
     count = CountVectorizer(stop_words="english")
@@ -121,6 +125,6 @@ def recommend(example1: int, example2: int, example3: int) -> list[int]:
         # prevent recommending examples provided
         if id in (example1, example2, example3):
             continue
-        recommendations.append(movies.iloc[pair[0]]["title"])
+        recommendations.append(int(movies.iloc[pair[0]]["id"]))
 
     return recommendations
