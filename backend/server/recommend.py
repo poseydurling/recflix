@@ -75,8 +75,10 @@ def create_soup(row) -> str:
     return " ".join(row["cast"]) + " " + row["director"] + " " + " ".join(row["genres"])
 
 
-# compute recommendation
 def recommend(example1: int, example2: int, example3: int) -> list[int]:
+    # TODO: docstring
+    # TODO: reduce # of calls to initialize()
+    # TODO: validate inputs
     # store the dataframe
     movies = initialize()
 
@@ -98,7 +100,7 @@ def recommend(example1: int, example2: int, example3: int) -> list[int]:
     ]
 
     # aggregate example movie rows into count matrix
-    example_count_matrix = np.sum(example_frequencies, axis=0)[0, :]
+    example_count_matrix = np.sum(example_frequencies, axis=0)
 
     # compute the cosine similarity matrix between the two count matrices
     similarity_matrix = cosine_similarity(
@@ -116,11 +118,10 @@ def recommend(example1: int, example2: int, example3: int) -> list[int]:
     for pair in similarity_scores:
         if len(recommendations) == 10:
             break
-        if pair[0] == example1 or pair[0] == example2 or pair[0] == example3:
+        id = movies.iloc[pair[0]]["id"]
+        # prevent recommending examples provided
+        if id in (example1, example2, example3):
             continue
-        recommendations.append(pair[0])
+        recommendations.append(movies.iloc[pair[0]]["title"])
 
     return recommendations
-
-
-recommend(100, 200, 302)
