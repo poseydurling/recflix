@@ -24,8 +24,8 @@ def initialize():
     movies["director"] = movies["crew"].apply(get_director)
 
     # replace the genre and cast columns with usable data
-    movies["genres"] = movies["genres"].apply(get_items)
-    movies["cast"] = movies["cast"].apply(get_items)
+    movies["genres"] = movies["genres"].apply(get_names)
+    movies["cast"] = movies["cast"].apply(get_names)
 
     # TODO: make this list modular
     # apply clean_data to the features
@@ -47,8 +47,8 @@ def get_director(cell):
     return np.nan
 
 
-def get_items(cell) -> list:
-    """Returns a list of the top three items in a cell or entire list; whichever is more"""
+def get_names(cell) -> list:
+    """Returns a list of the top three names in a cell or the entire list; whichever is more"""
     if isinstance(cell, list):
         names = [item["name"] for item in cell]
         # return the top three items in the list if possible
@@ -74,57 +74,69 @@ def create_soup(row) -> str:
     return " ".join(row["cast"]) + " " + row["director"] + " " + " ".join(row["genres"])
 
 
-def recommend(example1: int, example2: int, example3: int) -> list[int]:
-    """Computes a list of movie recommendations given three movie id examples"""
-    # TODO: reduce # of calls to initialize()
+class Recommender:
+    def __init__(self):
+        self.movies = initialize()
 
-    # store the dataframe
-    movies = initialize()
+    def recommend(self, example1: int, example2: int, example3: int) -> list[int]:
+        """
+        Compute a list of recommendations given three movie examples
 
-    # validate inputs by rejecting ids that do not exist in the dataset
-    if not all(id in movies["id"].values for id in [example1, example2, example3]):
-        raise ValueError
+        :param example1: the id of the first movie example
+        :param example2: the id of the second movie example
+        :param example3: the id of the third movie example
+        :return: a list of ten movie recommendations in the form of ids
+        :raises ValueError: if any of the examples do not exist in the dataset
+        """
 
-    # initialize count vectorizer object
-    count = CountVectorizer(stop_words="english")
+        # validate inputs by rejecting ids that do not exist in the dataset
+        if not all(
+            id in self.movies["id"].values for id in [example1, example2, example3]
+        ):
+            raise ValueError
 
-    # create count matrix for the movie corpus
-    corpus_count_matrix = count.fit_transform(movies["soup"])
+        # initialize count vectorizer object
+        count = CountVectorizer(stop_words="english")
 
-    # find the index of each example movie
-    # [0] is used to select the first element from the output of index, a Int64Index
-    example1_index: int = movies.index[movies["id"] == example1][0]
-    example2_index: int = movies.index[movies["id"] == example2][0]
-    example3_index: int = movies.index[movies["id"] == example3][0]
+        # create count matrix for the movie corpus
+        corpus_count_matrix = count.fit_transform(self.movies["soup"])
 
-    # create an array consisting of the three example movie count rows
-    example_frequencies = corpus_count_matrix[
-        [example1_index, example2_index, example3_index], :
-    ]
+        # find the index of each example movie
+        # [0] is used to select the first element from the output of index, an Int64Index
+        example1_index: int = self.movies.index[self.movies["id"] == example1][0]
+        example2_index: int = self.movies.index[self.movies["id"] == example2][0]
+        example3_index: int = self.movies.index[self.movies["id"] == example3][0]
 
-    # aggregate example movie rows into count matrix
-    example_count_matrix = np.sum(example_frequencies, axis=0)
+        # create an array consisting of the three example movie count rows
+        example_frequencies = corpus_count_matrix[
+            [example1_index, example2_index, example3_index], :
+        ]
 
-    # compute the cosine similarity matrix between the two count matrices
-    similarity_matrix = cosine_similarity(
-        np.asarray(example_count_matrix), corpus_count_matrix
-    )
+        # aggregate example movie rows into count matrix
+        example_count_matrix = np.sum(example_frequencies, axis=0)
 
-    # convert the similarity matrix into a list of (index, score) tuples
-    similarity_scores: list[tuple[int, float]] = list(enumerate(similarity_matrix[0]))
+        # compute the cosine similarity matrix between the two count matrices
+        similarity_matrix = cosine_similarity(
+            np.asarray(example_count_matrix), corpus_count_matrix
+        )
 
-    # sort the tuples based on similarity score
-    similarity_scores = sorted(similarity_scores, key=lambda x: x[1], reverse=True)
+        # convert the similarity matrix into a list of (index, score) tuples
+        similarity_scores: list[tuple[int, float]] = list(
+            enumerate(similarity_matrix[0])
+        )
 
-    # pick the top 10 movies (excluding the provided examples)
-    recommendations = []
-    for pair in similarity_scores:
-        if len(recommendations) == 10:
-            break
-        id = movies.iloc[pair[0]]["id"]
-        # prevent recommending examples provided
-        if id in (example1, example2, example3):
-            continue
-        recommendations.append(int(movies.iloc[pair[0]]["id"]))
+        # sort the tuples based on similarity score
+        similarity_scores = sorted(similarity_scores, key=lambda x: x[1], reverse=True)
 
-    return recommendations
+        # pick the top 10 movies (excluding the provided examples)
+        recommendations = []
+        for pair in similarity_scores:
+            if len(recommendations) == 10:
+                break
+            id = self.movies.iloc[pair[0]]["id"]
+            # prevent recommending examples provided
+            if id in (example1, example2, example3):
+                continue
+            recommendations.append(int(self.movies.iloc[pair[0]]["id"]))
+
+        return recommendations

@@ -1,5 +1,11 @@
 import pytest
-from server.recommend import recommend, get_director, get_names, clean_data, create_soup
+from server.recommend import (
+    Recommender,
+    get_director,
+    get_names,
+    clean_data,
+    create_soup,
+)
 import pandas as pd
 import numpy as np
 
@@ -10,7 +16,8 @@ def test_recommend():
 
     :return: None
     """
-    recommendations = recommend(100, 200, 302)
+    recommender = Recommender()
+    recommendations = recommender.recommend(100, 200, 302)
     assert len(recommendations) == 10
     for id in recommendations:
         # check that each movie id is an int
@@ -20,9 +27,9 @@ def test_recommend():
 
     # check that invalid movie ids raise exception
     with pytest.raises(ValueError):
-        recommend(-1, 100, 100)
-        recommend(100, -1, 100)
-        recommend(100, 100, -1)
+        recommender.recommend(-1, 100, 100)
+        recommender.recommend(100, -1, 100)
+        recommender.recommend(100, 100, -1)
 
 
 def test_get_director():
