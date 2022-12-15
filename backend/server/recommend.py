@@ -5,78 +5,9 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 
-def initialize():
-    """Configures the dataframe used to produce recommendations"""
-    # load the data
-    people = pd.read_csv("data/tmdb_5000_credits.csv")
-    movies = pd.read_csv("data/tmdb_5000_movies.csv")
-
-    # merge the two datasets
-    people.columns = ["id", "tittle", "cast", "crew"]
-    movies = movies.merge(people, on="id")
-
-    # parse the cast, crew, and genre data from stringified lists to usable Python objects
-    features = ["cast", "crew", "genres"]
-    for feature in features:
-        movies[feature] = movies[feature].apply(literal_eval)
-
-    # create a new column for directors
-    movies["director"] = movies["crew"].apply(get_director)
-
-    # replace the genre and cast columns with usable data
-    movies["genres"] = movies["genres"].apply(get_names)
-    movies["cast"] = movies["cast"].apply(get_names)
-
-    # TODO: make this list modular
-    # apply clean_data to the features
-    features = ["cast", "director", "genres"]
-    for feature in features:
-        movies[feature] = movies[feature].apply(clean_data)
-
-    # create a column containing a string with each movie's features
-    movies["soup"] = movies.apply(create_soup, axis="columns")
-
-    return movies
-
-
-def get_director(cell):
-    """Gets the director's name from the crew feature if it exists"""
-    for person in cell:
-        if person["job"] == "Director":
-            return person["name"]
-    return np.nan
-
-
-def get_names(cell) -> list:
-    """Returns a list of the top three names in a cell or the entire list; whichever is more"""
-    if isinstance(cell, list):
-        names = [item["name"] for item in cell]
-        # return the top three items in the list if possible
-        if len(names) > 3:
-            names = names[:3]
-        return names
-    # return empty list in case of missing/malformed data
-    return []
-
-
-def clean_data(cell):
-    """Converts all strings to lower case with no spaces"""
-    if isinstance(cell, list):
-        return [str.lower(item.replace(" ", "")) for item in cell]
-    elif isinstance(cell, str):
-        return str.lower(cell.replace(" ", ""))
-    else:
-        return ""
-
-
-def create_soup(row) -> str:
-    """Compiles the cast, director, and genres features into a string for the provided row"""
-    return " ".join(row["cast"]) + " " + row["director"] + " " + " ".join(row["genres"])
-
-
 class Recommender:
     def __init__(self):
-        self.movies = initialize()
+        self.movies = pd.read_csv("data/tmdb_5000_default.csv")
 
     def recommend(self, example1: int, example2: int, example3: int) -> list[int]:
         """
@@ -88,7 +19,6 @@ class Recommender:
         :return: a list of ten movie recommendations in the form of ids
         :raises ValueError: if any of the examples do not exist in the dataset
         """
-
         # validate inputs by rejecting ids that do not exist in the dataset
         if not all(
             id in self.movies["id"].values for id in [example1, example2, example3]
@@ -140,3 +70,80 @@ class Recommender:
             recommendations.append(int(self.movies.iloc[pair[0]]["id"]))
 
         return recommendations
+
+
+def construct_default_dataset():
+    """
+    Construct the default movie + credits dataset used for computing recommendations. Function
+    application only necessary when file does not already exist or changes are being made.
+
+    :return: None
+    """
+    # load the data
+    people = pd.read_csv("data/tmdb_5000_credits.csv")
+    movies = pd.read_csv("data/tmdb_5000_movies.csv")
+
+    # merge the two datasets
+    people.columns = ["id", "tittle", "cast", "crew"]
+    movies = movies.merge(people, on="id")
+
+    # parse the cast, crew, and genre data from stringified lists to usable Python objects
+    features = ["cast", "crew", "genres"]
+    for feature in features:
+        movies[feature] = movies[feature].apply(literal_eval)
+
+    # create a new column for directors
+    movies["director"] = movies["crew"].apply(get_director)
+
+    # replace the genre and cast columns with usable data
+    movies["genres"] = movies["genres"].apply(get_names)
+    movies["cast"] = movies["cast"].apply(get_names)
+
+    # apply clean_data to the features
+    features = ["cast", "director", "genres"]
+    for feature in features:
+        movies[feature] = movies[feature].apply(clean_data)
+
+    # create a column containing a string with each movie's features
+    movies["soup"] = movies.apply(create_soup, axis="columns")
+
+    movies.to_csv("data/tmdb_5000_default.csv", index=False)
+
+
+def get_director(cell):
+    """Gets the director's name from the crew feature if it exists"""
+    for person in cell:
+        if person["job"] == "Director":
+            return person["name"]
+    return np.nan
+
+
+def get_names(cell) -> list:
+    """Returns a list of the top three names in a cell or the entire list; whichever is more"""
+    if isinstance(cell, list):
+        names = [item["name"] for item in cell]
+        # return the top three items in the list if possible
+        if len(names) > 3:
+            names = names[:3]
+        return names
+    # return empty list in case of missing/malformed data
+    return []
+
+
+def clean_data(cell):
+    """Converts all strings to lower case with no spaces"""
+    if isinstance(cell, list):
+        return [str.lower(item.replace(" ", "")) for item in cell]
+    elif isinstance(cell, str):
+        return str.lower(cell.replace(" ", ""))
+    else:
+        return ""
+
+
+def create_soup(row) -> str:
+    """Compiles the cast, director, and genres features into a string for the provided row"""
+    return " ".join(row["cast"]) + " " + row["director"] + " " + " ".join(row["genres"])
+
+
+if __name__ == "__main__":
+    construct_default_dataset()
