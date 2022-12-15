@@ -59,7 +59,6 @@ def get_items(cell) -> list:
     return []
 
 
-# TODO: type annotate with str | list[str]
 def clean_data(cell):
     """Converts all strings to lower case with no spaces"""
     if isinstance(cell, list):
@@ -76,7 +75,7 @@ def create_soup(row) -> str:
 
 
 def recommend(example1: int, example2: int, example3: int) -> list[int]:
-    # TODO: docstring
+    """Computes a list of movie recommendations given three movie id examples"""
     # TODO: reduce # of calls to initialize()
     # TODO: validate inputs
     # store the dataframe
