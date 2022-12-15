@@ -9,6 +9,8 @@ from server.recommend import (
 import pandas as pd
 import numpy as np
 
+from server.feature import Feature
+
 
 def test_recommend():
     """
@@ -16,7 +18,7 @@ def test_recommend():
 
     :return: None
     """
-    recommender = Recommender()
+    recommender = Recommender(config="yo")
     recommendations = recommender.recommend(100, 200, 302)
     assert len(recommendations) == 10
     for id in recommendations:
@@ -163,7 +165,8 @@ def test_create_soup():
     :return: None
     """
     row = pd.Series({"cast": ["a", "b", "c"], "director": "bob", "genres": ["action"]})
-    assert create_soup(row) == "a b c bob action"
+    features = {Feature.CAST, Feature.DIRECTOR, Feature.GENRES}
+    assert create_soup(row, features) == "a b c bob action"
 
 
 # TODO: update requirements.txt when done
