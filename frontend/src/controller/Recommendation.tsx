@@ -91,4 +91,12 @@ function handleTrashClick() {
     submitCount--;
 }
 
+// export async function getMovieRec(){
+//     const response = await fetch('http://127.0.0.1:5000/recommendations/', {
+//     })
+//     const recommednationData = await response.json()
+//     console.log(recommednationData + "Printing in here")
+//     return recommednationData
+// }
+
 export {handleTrashClick};

@@ -39,10 +39,11 @@ export async function getMovieTitleList(){
 
 
 
-let movieID = [0,0,0]; //three user inputted movie IDs
+export let movieID = [0,0,0]; //three user inputted movie IDs
 let movieIndex = 0; //movId index
 let movieCount = 0; //counts for number of searched movies
 var dataDB: (DB|null) = null;
+
 
 
 

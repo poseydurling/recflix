@@ -33,7 +33,6 @@ export async function getNewMovieInformation(recId : number[]){
         recommendTitle = data.original_title
         recommendRating = data.vote_average
         recommendDescrip = data.tagline
-
         console.log(posterPath)
         console.log(recommendTitle)
     })

@@ -31,12 +31,13 @@ export default function Search(props: any){
         const posterResponse1 = await fetchPoster(search);
         setcard1(posterResponse1)
     
-        const posterResponse2 = await fetchPoster(card2);
+        const posterResponse2 = await fetchPoster(search);
         setcard2(posterResponse2)
     
-        const posterResponse3 = await fetchPoster(card3);
+        const posterResponse3 = await fetchPoster(search);
         setcard3(posterResponse3)
       }
+
       useEffect(() => {
           movieName()})
     return (    

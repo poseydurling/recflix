@@ -19,7 +19,9 @@ export default function RecommendButton() {
     return (
         <div>
             <button type="submit" id="recommendButton"
-                onClick={() => {getMovieInformation(recMovlist); navigateToRecPage('/recommendationPage')}}
+                onClick={() => { 
+                    
+                    getMovieInformation(recMovlist); navigateToRecPage('/recommendationPage')}}
             // onClick={() => {history.push('/')}}
             // onClick={() => {navigateToRecPage}}
             /*onClick={() => {getMovieAutocomplete(search)}}*/>Recommend-A-Movie</button>
@@ -38,6 +40,7 @@ export async function sendPost(movieId: number[]){
         },
         body: JSON.stringify({ "example1": movieId[0], "example2" : movieId[1], "example3": movieId[2]})
     })
+    console.log(rsp)
     return await rsp.json()
 }
 
