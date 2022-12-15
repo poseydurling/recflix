@@ -1,3 +1,5 @@
+import { isPropertySignature } from "typescript"
+
 export default function Movie(props: any){
     const movieId = {}
     return (
@@ -5,6 +7,6 @@ export default function Movie(props: any){
     )
 }
 
-export function uploadPoster(){
-
+export function uploadPoster(props: any){
+   
 }

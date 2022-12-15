@@ -6,12 +6,34 @@ interface DB {
 }
 
 
+
 //get master list of all movie titles to IDs
 export async function getAllMovies(){
-  const response = await fetch('http://127.0.0.1:5000/titles_to_ids/')
+  const response = await fetch('http://127.0.0.1:5000/titles_to_ids/', {
+    mode: 'cors',
+    headers: {
+      'Acess-Control-Allow-origin': '*'
+    }
+  })
   const moviedata = await response.json()
 
+
   return moviedata.data;
+ 
+}
+
+export async function getMovieTitleList(){
+  const response = await fetch('http://127.0.0.1:5000/titles_to_ids/', {
+    mode: 'cors',
+    headers: {
+      'Acess-Control-Allow-origin': '*'
+    }
+  })
+  const moviedata = await response.json()
+
+  
+  return Object.keys(moviedata.data);
+  
 }
 
 
@@ -26,10 +48,8 @@ var dataDB: (DB|null) = null;
 
 export async function getMovieTitlesFromMap(){
   dataDB = await getAllMovies() as DB
-  const keysOfMovies = keys<DB>();
-  console.log(keysOfMovies);
-  
-  keysOfMovies.toString();
+const keysOfProps = keys<DB>();
+console.log(keysOfProps); 
 }
 
 
