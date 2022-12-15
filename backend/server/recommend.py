@@ -7,13 +7,11 @@ from server.feature import Feature
 
 
 class Recommender:
-    def __init__(self, config=None):
-        if not config:
-            self.movies = pd.read_csv("data/tmdb_5000_default.csv")
+    def __init__(self, features: set[Feature] = None):
+        if features:
+            self.movies = construct_custom_dataset(features)
         else:
-            self.movies = construct_custom_dataset(
-                {Feature.CAST, Feature.DIRECTOR, Feature.GENRES}
-            )
+            self.movies = pd.read_csv("data/tmdb_5000_default.csv")
 
     def recommend(self, example1: int, example2: int, example3: int) -> list[int]:
         """
@@ -52,6 +50,7 @@ class Recommender:
         example_count_matrix = np.sum(example_frequencies, axis=0)
 
         # compute the cosine similarity matrix between the two count matrices
+        # TODO: strategy pattern
         similarity_matrix = cosine_similarity(
             np.asarray(example_count_matrix), corpus_count_matrix
         )
@@ -116,7 +115,7 @@ def construct_default_dataset():
     movies.to_csv("data/tmdb_5000_default.csv", index=False)
 
 
-def construct_custom_dataset(features: set):
+def construct_custom_dataset(features: set[Feature]):
     """
     Construct a custom movie + credits dataset to use for computing recommendations.
 
@@ -130,22 +129,18 @@ def construct_custom_dataset(features: set):
     people.columns = ["id", "tittle", "cast", "crew"]
     movies = movies.merge(people, on="id")
 
+    # parse provided features into usable data for the recommend method
     if Feature.DIRECTOR in features:
-        # parse the crew data from stringified list to usable Python objects
         movies["crew"] = movies["crew"].apply(literal_eval)
         # create a new column for directors
         movies["director"] = movies["crew"].apply(get_director)
         movies["director"] = movies["director"].apply(clean_data)
     if Feature.GENRES in features:
-        # parse the crew movie from stringified list to usable Python objects
         movies["genres"] = movies["genres"].apply(literal_eval)
-        # replace the genre column with usable data
         movies["genres"] = movies["genres"].apply(get_names)
         movies["genres"] = movies["genres"].apply(clean_data)
     if Feature.CAST in features:
-        # parse the crew data from stringified list to usable Python objects
         movies["cast"] = movies["cast"].apply(literal_eval)
-        # replace the cast column with usable data
         movies["cast"] = movies["cast"].apply(get_names)
         movies["cast"] = movies["cast"].apply(clean_data)
 

@@ -18,7 +18,7 @@ def test_recommend():
 
     :return: None
     """
-    recommender = Recommender(config="yo")
+    recommender = Recommender()
     recommendations = recommender.recommend(100, 200, 302)
     assert len(recommendations) == 10
     for id in recommendations:
@@ -32,6 +32,13 @@ def test_recommend():
         recommender.recommend(-1, 100, 100)
         recommender.recommend(100, -1, 100)
         recommender.recommend(100, 100, -1)
+
+    # check that create_default_dataset and create_custom_dataset produce the same
+    # recommendations when using the same features
+    features = {Feature.CAST, Feature.DIRECTOR, Feature.GENRES}
+    recommender_custom = Recommender(features)
+    recommendations_custom = recommender_custom.recommend(100, 200, 302)
+    assert recommendations == recommendations_custom
 
 
 def test_get_director():
