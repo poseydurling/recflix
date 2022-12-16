@@ -174,6 +174,3 @@ def test_create_soup():
     row = pd.Series({"cast": ["a", "b", "c"], "director": "bob", "genres": ["action"]})
     features = {Feature.CAST, Feature.DIRECTOR, Feature.GENRES}
     assert create_soup(row, features) == "a b c bob action"
-
-
-# TODO: update requirements.txt when done
