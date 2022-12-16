@@ -51,7 +51,7 @@
 /* https://rasleen0209.medium.com/styling-a-react-component-using-flexbox-b0f7f73d21b1 
 flexbox with react*/
 
-#movieCard1{ 
+.movieCard1{ 
   margin: 100px;
   background-color: lightgray;
   height: 350px;

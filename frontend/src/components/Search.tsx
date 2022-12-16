@@ -4,7 +4,8 @@ import { AutoComplete } from 'rsuite'
 import 'rsuite/dist/rsuite.min.css';
 import { getMovieTitlesFromMap } from "../controller/Search";
 import { fetchPoster } from "../controller/Media";
-import { uploadPoster } from "./Movie";
+import Movie from "./Movie";
+import { validateLocaleAndSetLanguage } from "typescript";
 
 
 //https://rsuitejs.com/components/auto-complete/
@@ -15,9 +16,15 @@ let count = 0;
 
 //to have a shared state variable between search and form we need to make a useState in the class that contains both the search and 
 
+interface Movie {
+    movieName: string
+}
 export default function Search(props: any) {
+    const [movieList, setMList] = useState<Movie[]>([]);
+
     const [titleList, setTitleList] = useState(['']);
     const [search, setSearch] = useState('');
+
     const movieName = async () => {
         const response = await getMovieTitleList();
         setTitleList(response)
@@ -31,7 +38,7 @@ export default function Search(props: any) {
     const [card2, setcard2] = useState('');
     const [card3, setcard3] = useState('');
 
-   
+
     const handleSettingCard = async () => {
         const posterResponse1 = await fetchPoster(search);
         // setcard1(posterResponse1)
@@ -43,7 +50,7 @@ export default function Search(props: any) {
         // setcard3(posterResponse3)
     }
     const handleChange = (val: any) => {
-        setSearch(val);
+        setSearch(val)
     };
 
 
@@ -60,8 +67,17 @@ export default function Search(props: any) {
                 // props.setCount()
                 /*getAutocompleteList()*/
                 count++;
-                uploadPoster(count, search);
+                let result = search
+                let newMovie = { movieName: result }
+                let newList: Movie[] = movieList
+                newList.push(newMovie)
+                setMList(newList)
+                console.log(movieList)
+                setSearch("")
             }}>Search</button>
+            <div className="movieCards">
+                {movieList.map(movie => <Movie card="card1" movieName={movie.movieName} />)}
+            </div>
         </div>
     )
 }

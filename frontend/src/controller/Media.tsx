@@ -5,8 +5,9 @@ import { movieID } from './Search'
 
 
 //check async part of this function
-let fetchPoster = async function (movieName: String){
+let fetchPoster = async function (movieName: String) {
   // console.log("movieId in fetchposter: " + movieID)
+  console.log(movieName + "fetched name")
   const url = await 'https://api.themoviedb.org/3/movie/' + movieID + '?api_key=' + myKey + '&language=en-US&query=' + movieName;
   console.log('url: ' + url);
   const response: Response = await fetch(url);

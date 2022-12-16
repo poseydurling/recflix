@@ -5,15 +5,14 @@ import TryAgainButton from '../components/TryAgainButton'
 //import NewRequestButton from '../components/newRequestButton';
 import NewRequestButton from '../components/NewRequestButton';
 
-function NewRecommendation(){
+function NewRecommendation() {
     return (
         <div>
             <NavBar></NavBar>
             <div>Our New Recommendation for You is..</div>
-                <Movie></Movie>
             <TryAgainButton></TryAgainButton>
             <NewRequestButton></NewRequestButton>
-    
+
         </div>
     )
 }
