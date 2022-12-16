@@ -4,12 +4,14 @@ import { AutoComplete } from 'rsuite'
 import 'rsuite/dist/rsuite.min.css';
 import { getMovieTitlesFromMap } from "../controller/Search";
 import { fetchPoster } from "../controller/Media";
+import { uploadPoster } from "./Movie";
 
 
 //https://rsuitejs.com/components/auto-complete/
 //https://blog.devgenius.io/getting-started-with-react-development-with-the-react-suite-library-autocomplete-and-toggle-169701dbb8c7
 
 const options = ['Monday', 'Tuesday']
+let count = 0;
 
 //to have a shared state variable between search and form we need to make a useState in the class that contains both the search and 
 
@@ -32,7 +34,7 @@ export default function Search(props: any) {
    
     const handleSettingCard = async () => {
         const posterResponse1 = await fetchPoster(search);
-        setcard1(posterResponse1)
+        // setcard1(posterResponse1)
 
         // const posterResponse2 = await fetchPoster(search);
         // setcard2(posterResponse2)
@@ -45,9 +47,6 @@ export default function Search(props: any) {
     };
 
 
-
-
-
     useEffect(() => {
         movieName()
     })
@@ -56,12 +55,12 @@ export default function Search(props: any) {
             {/* onChange={(event) => {setSearch(event.target.value)}} */}
             <AutoComplete style={{ width: '100%' }} id="search-box" placeholder="Enter a movie title here!" data={titleList} value={search} onChange={handleChange} />
             <button type="submit" id="submit1" onClick={async () => {
-                await buildRecommendationsbySearch(search)
-                await handleSettingCard()
-                props.setCount()
-
-
+                await buildRecommendationsbySearch(search);
+                // await handleSettingCard()
+                // props.setCount()
                 /*getAutocompleteList()*/
+                count++;
+                uploadPoster(count, search);
             }}>Search</button>
         </div>
     )

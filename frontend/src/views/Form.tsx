@@ -12,9 +12,8 @@ function Form(props: any){
 
   const updateCount = (val: any) => {
     setCount(val++);
-    console.log("CHECK COUNT HERE"      +count)
+    console.log("CHECK COUNT HERE "+count)
 };
-
     return (
         <div className="App">
           <NavBar></NavBar>
@@ -23,9 +22,9 @@ function Form(props: any){
                 <br></br>
                 <Search onClickFunc={props.onClick} searchMovie={props.search} setMovie={props.setSearch} count={count} setCount={updateCount}/>
                 <div className='movieCards'>
-                    <Movie card1={props.card1}/>
-                    <Movie card2={props.card2} />
-                    <Movie card3={props.card3}/>
+                    <Movie card={'card1'}/>
+                    <Movie card={'card2'} />
+                    <Movie card={'card3'}/>
                     {/* <Movie id="movieCard2"/>
                     <Movie id="movieCard3"/> */}
                     <TrashIcon/>

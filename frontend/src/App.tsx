@@ -21,13 +21,13 @@ function App () {
 
   const handleSettingCard = async()=>{
     const posterResponse1 = await fetchPoster(search);
-    setcard1(posterResponse1)
+    // setcard1(posterResponse1)
 
     const posterResponse2 = await fetchPoster(search);
-    setcard2(posterResponse2)
+    // setcard2(posterResponse2)
 
     const posterResponse3 = await fetchPoster(search);
-    setcard3(posterResponse3)
+    // setcard3(posterResponse3)
   }
   return (
     <BrowserRouter>

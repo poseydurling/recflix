@@ -59,7 +59,41 @@ flexbox with react*/
   width: 250px;
   float: left;
   margin-left: 120px;
-  /* content: url("https://image.tmdb.org/t/p/original/wigZBAmNrIhxp2FNGOROUAeHvdh.jpg"); */
+}
+
+#movieCard1 img{
+  height: 350px;
+  width: 250px;
+}
+
+#movieCard2{ 
+  margin: 100px;
+  background-color: lightgray;
+  height: 350px;
+  margin-top: 60px;
+  width: 250px;
+  float: left;
+  margin-left: 120px;
+}
+
+#movieCard2 img{
+  height: 350px;
+  width: 250px;
+}
+
+#movieCard3{ 
+  margin: 100px;
+  background-color: lightgray;
+  height: 350px;
+  margin-top: 60px;
+  width: 250px;
+  float: left;
+  margin-left: 120px;
+}
+
+#movieCard3 img{
+  height: 350px;
+  width: 250px;
 }
 
 #trashIcon{
