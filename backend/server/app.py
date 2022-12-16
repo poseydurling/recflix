@@ -7,6 +7,7 @@ from flask_cors import CORS
 from csv import DictReader
 from server.response_error import ResponseError, BadRequestError
 
+
 logging.basicConfig(level=logging.INFO)
 
 app = Flask(__name__)

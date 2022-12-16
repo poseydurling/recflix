@@ -5,6 +5,7 @@ import Search from '../components/Search'
 import RecommendButton from '../components/RecommendButton'
 import TrashIcon from '../components/TrashIcon'
 import { useState } from 'react'
+import React from 'react'
 
 
 function Form(props: any) {
@@ -16,6 +17,7 @@ function Form(props: any) {
     setCount(val++);
     console.log("CHECK COUNT HERE " + count)
   };
+
   return (
     <div className="App">
       <NavBar></NavBar>
@@ -24,11 +26,6 @@ function Form(props: any) {
       <br></br>
       <Search onClickFunc={props.onClick} searchMovie={props.search} setMovie={props.setSearch} count={count} setCount={updateCount} />
       <div className='movieCards'>
-        {/* <Movie id="movieCard2"/>
-                    <Movie id="movieCard3"/> */}
-        <TrashIcon />
-        <TrashIcon />
-        <TrashIcon />
       </div>
       <RecommendButton></RecommendButton>
     </div>
