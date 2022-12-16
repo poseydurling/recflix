@@ -27,9 +27,9 @@ def get_recommendations():
     examples
     """
     # expect POST request content type to be application/json
-    example1: str = request.json.get("example1")
-    example2: str = request.json.get("example2")
-    example3: str = request.json.get("example3")
+    example1: int = request.json.get("example1")
+    example2: int = request.json.get("example2")
+    example3: int = request.json.get("example3")
     # raise error if one or more examples are null
     if not example1 or not example2 or not example3:
         raise BadRequestError
