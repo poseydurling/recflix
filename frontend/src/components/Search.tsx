@@ -30,7 +30,7 @@ export default function Search(props: any) {
     const [titleList, setTitleList] = useState(['']);
     const [search, setSearch] = useState('');
 
-    const movieName = async () => {
+    const finalName = async () => {
         const response = await getMovieTitleList();
         setTitleList(response)
     }
@@ -60,13 +60,15 @@ export default function Search(props: any) {
 
 
     useEffect(() => {
-        movieName()
+        finalName()
     })
     return (
         <div>
             <AutoComplete style={{ width: '100%' }} id="search-box" placeholder="Enter a movie title here!" data={titleList} value={search} onChange={handleChange} />
             <button type="submit" id="submit1" onClick={async () => {
-                await buildRecommendationsbySearch(search);
+                // await buildRecommendationsbySearch(search);
+             
+                
                 //await fetchPoster(search);
                 // await handleSettingCard()
                 // props.setCount()
@@ -80,10 +82,12 @@ export default function Search(props: any) {
                 console.log(movieList)
                 setSearch("")
             }}>Search</button>
-            <div className="movieCards">
-                {movieList.map(movie => <Movie /*card="card1"*/ movieName={movie.movieName} />)}
+            <div className="movieCards"> 
+                {/* {movieList.map(movie => <Movie  card="card1" movieName={movie.movieName} />)} */}
+                {movieList.map(movie => <Movie movieName={movie.movieName} /> )}
+               
             </div>
-        </div>
+         </div> 
     )
 }
 export let recMovlist: any[] = []

@@ -5,25 +5,50 @@ import Recommendation from "../views/Recommendation";
 import Form from "../views/Form";
 // import {useHistory} from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Movie from '../components/Movie'
+import {movieID}  from "../controller/Search"
 
 let posterPath : String = ""
-let recommendTitle : String = ""
+let recommendTitle : string = ""
 let recommendRating : String = ""
 let recommendDescrip : String = ""
+let recTtitleOne : String = ""
+
+
+interface RecList{
+    movieName: string
+}
 
 export default function RecommendButton() {
     //    const history = useHistory();
     const navigateToRecPage = useNavigate();
+    const [movieRecList, setMovieRec] = useState<RecList[]>([]);
+    const [search, setSearch] = useState();
+    const[movieId, setIdSearch] = useState();
+
+  
+   
+
+ 
+
+  
 
     //const [search, setSearch] = useState('');
     return (
         <div>
             <button type="submit" id="recommendButton"
                 onClick={() => { 
-                    getMovieInformation(recMovlist); navigateToRecPage('/recommendationPage')}}
+                    getMovieInformation(recMovlist); navigateToRecPage('/recommendationPage');
+
+                }}
             // onClick={() => {history.push('/')}}
             // onClick={() => {navigateToRecPage}}
             /*onClick={() => {getMovieAutocomplete(search)}}*/>Recommend-A-Movie</button>
+
+<               div className="movieCards">
+                    {/* <Movie movieName={recommendTitle} /> */}
+                </div>
+           
 
         </div>
     )
@@ -44,7 +69,6 @@ export async function sendPost(movieId: number[]){
 }
 
 export async function getMovieInformation(recId : number[]){
-
     if(recId.length < 3)
     {
         alert("please search at least 3 movies first!")
@@ -56,11 +80,15 @@ export async function getMovieInformation(recId : number[]){
             recommendTitle = data.original_title
             recommendRating = data.vote_average
             recommendDescrip = data.tagline
-        //    console.log(posterPath)
-        //    console.log(recommendTitle)
+           console.log(posterPath)
+           console.log(recommendTitle)
         })
     }
 }
+
+
+
+
 
 export async function getMovieDetails(movid: number) {
     const url = "https://api.themoviedb.org/3/movie/"+movid+"?api_key=ca80130f34859e4807faeca3729ca13e&language=en-US"
