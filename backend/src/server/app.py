@@ -10,6 +10,7 @@ logging.basicConfig(level=logging.INFO)
 app = Flask(__name__)
 CORS(app)
 
+
 # handlers
 # response formatting reference: https://github.com/omniti-labs/jsend
 @app.errorhandler(ResponseError)
@@ -30,11 +31,16 @@ def get_recommendations():
     example2: int = request.json.get("example2")
     example3: int = request.json.get("example3")
     # raise error if one or more examples are null
-    if not example1 or not example2 or not example3:
+    if example1 is None or example2 is None or example3 is None:
         raise BadRequestError
-    app.logger.info(f"Example 1: {example1}")
-    app.logger.info(f"Example 2: {example2}")
-    app.logger.info(f"Example 3: {example3}")
+    # raise error if one or more of the examples are not an int
+    if (
+        type(example1) is not int
+        or type(example2) is not int
+        or type(example3) is not int
+    ):
+        raise BadRequestError
+    # produce recommendations
     recommender = Recommender()
     try:
         recommendations = recommender.recommend(example1, example2, example3)
