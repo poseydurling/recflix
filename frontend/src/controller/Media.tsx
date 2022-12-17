@@ -16,7 +16,7 @@ let fetchPoster = async function (movieName: String) {
   console.log('data: ' + data);
   let poster_path = await data['poster_path']
   console.log('path: ' + poster_path);
-  const full_path = "https://image.tmdb.org/t/p/original/" + poster_path
+  const full_path =  "https://image.tmdb.org/t/p/original/" + poster_path
 
   console.log('full path: ' + full_path)
 

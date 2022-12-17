@@ -20,7 +20,6 @@ export default function RecommendButton() {
         <div>
             <button type="submit" id="recommendButton"
                 onClick={() => { 
-                    
                     getMovieInformation(recMovlist); navigateToRecPage('/recommendationPage')}}
             // onClick={() => {history.push('/')}}
             // onClick={() => {navigateToRecPage}}

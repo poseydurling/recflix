@@ -1,19 +1,24 @@
 import { useEffect, useState } from "react"
 import { isPropertySignature } from "typescript"
 import { fetchPoster } from "../controller/Media"
+import { movieID } from "../controller/Search"
+import { myKey } from "../private/key"
+
 
 interface MovieProps {
     movieName: string
     card: string
 }
 
+
 export default function Movie({ movieName, card }: MovieProps) {
     return (
         <div className="movieCard1">
-            <Poster name={movieName} />
+            <Poster name={movieName}  />
         </div>
     )
-    {/* } else if(props.card == 'card2'){
+}
+    /* } else if(props.card == 'card2'){
         return(
             <div id="movieCard2">   
         </div>
@@ -31,26 +36,62 @@ export default function Movie({ movieName, card }: MovieProps) {
     }
         //props.card1 gives u whatever if in the high level state variable 
         //tell page to display the background path from fetchPoster
-        //use an image element to do this */}
+        //use an image element to do this */
+
+
+interface getMoivePoster {
+    name: string
+    link : string
 }
+
+// export default function MoviePoster({name, link } : getMoivePoster){
+//     return (
+//         <div className="movieCard4">
+//             <Poster name={name} link={link} />
+//         </div>
+//     )
+
+// }
+
+
 
 interface PosterProps {
     name: string
+ 
 }
+
+// export function Poster({name, link} : PosterProps){
+//     const [path, setPath] = useState<string | null>(null)
+//         useEffect(() => {
+//          fetchPoster(name).then(path => setPath(path));
+//     }, [])
+//     return (
+//         <div>
+//             <p> {name} </p>
+//             {path ? <img src={path} /> : null}
+
+//         </div>
+//     )
+
+// }
 
 export function Poster({ name }: PosterProps) {
     const [path, setPath] = useState<string | null>(null)
-
     useEffect(() => {
          fetchPoster(name).then(p => setPath(p));
     }, [])
-
+   
     return (
         <div>
             <p>{name}</p>
             {path ? <img src={path} /> : null}
         </div>
     )
+    }
+
+
+
+
 
     // if(count == 1){
     //     let el1 = document.getElementById("movieCard1");
@@ -79,4 +120,3 @@ export function Poster({ name }: PosterProps) {
     // } else {
     //     return console.log('cannot get poster path')
     // }
-}

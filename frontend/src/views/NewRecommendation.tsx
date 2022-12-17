@@ -1,5 +1,5 @@
 import '../styles/main.css'
-import Movie from '../components/Movie'
+// import Movie from '../components/Movie'
 import NavBar from '../components/NavBar'
 import TryAgainButton from '../components/TryAgainButton'
 //import NewRequestButton from '../components/newRequestButton';
