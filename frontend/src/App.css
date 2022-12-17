@@ -71,6 +71,11 @@ flexbox with react*/
   margin-left: 120px;
 }
 
+#movieCard img{
+  height: 350px;
+  width: 250px;
+}
+
 #trashIcon{
   margin: 100px;
   background-color: white;

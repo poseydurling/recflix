@@ -2,12 +2,11 @@ import { sendPost } from "../components/RecommendButton";
 import { useState } from "react";
 import { keys } from 'ts-transformer-keys';
 
+let examples: number[] = [];
 
 interface DB {
   [name: string]: number;
 }
-
-
 
 //get master list of all movie titles to IDs
 export async function getAllMovies() {
@@ -38,16 +37,10 @@ export async function getMovieTitleList() {
 
 }
 
-
-
-
 export let movieID = [0, 0, 0]; //three user inputted movie IDs
 let movieIndex = 0; //movId index
 let movieCount = 0; //counts for number of searched movies
 var dataDB: (DB | null) = null;
-
-
-
 
 export async function getMovieTitlesFromMap() {
   dataDB = await getAllMovies() as DB
@@ -55,11 +48,22 @@ export async function getMovieTitlesFromMap() {
   console.log(keysOfProps);
 }
 
+export async function updateExamples(title : string){
+  //make sure cache is empty
+  if (dataDB === null) {
+    //if it's empty get the master list of movies
+    dataDB = await getAllMovies() as DB
+  }
+  //throw alert if movie title doesn't exist
+  if (dataDB[title] === null) {
+    throw new Error("No match exist!")
+  }
+  const id = dataDB[title]
+  examples.push(id)
+  return examples;
+}
 
-
-
-
-export async function searchTitle(name: string) {
+export async function getRecommendation(name: string) {
   // const [movieId, getmoiveID] = useState[('')]; 
   //if there's no user input --> alert user
   if (name === "") {

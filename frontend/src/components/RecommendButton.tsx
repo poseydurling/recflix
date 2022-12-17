@@ -1,14 +1,10 @@
 import { useState } from "react";
-import { searchTitle } from "../controller/Search";
 import { recMovlist } from "../components/Search";
-import Recommendation from "../views/Recommendation";
-import Form from "../views/Form";
-// import {useHistory} from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import Movie from '../components/Movie'
-import {movieID}  from "../controller/Search"
+import {myKey} from '../private/key';
+import { fetchPoster } from "../controller/Media";
 
-let posterPath : String = ""
+let posterPath : string = ""
 let recommendTitle : string = ""
 let recommendRating : String = ""
 let recommendDescrip : String = ""
@@ -24,22 +20,18 @@ export default function RecommendButton() {
     const navigateToRecPage = useNavigate();
     const [movieRecList, setMovieRec] = useState<RecList[]>([]);
     const [search, setSearch] = useState();
-    const[movieId, setIdSearch] = useState();
-
-  
-   
-
- 
-
-  
+    const[movieId, setMovieId] = useState();
 
     //const [search, setSearch] = useState('');
     return (
         <div>
             <button type="submit" id="recommendButton"
                 onClick={() => { 
-                    getMovieInformation(recMovlist); navigateToRecPage('/recommendationPage');
-
+                    //get rec movie list by calling the post function and pass this argument in for the get movie info
+                    getMovieInformation(recMovlist); 
+                    navigateToRecPage('/recommendationPage');
+                    
+                    //recId[0]
                 }}
             // onClick={() => {history.push('/')}}
             // onClick={() => {navigateToRecPage}}
@@ -85,10 +77,6 @@ export async function getMovieInformation(recId : number[]){
         })
     }
 }
-
-
-
-
 
 export async function getMovieDetails(movid: number) {
     const url = "https://api.themoviedb.org/3/movie/"+movid+"?api_key=ca80130f34859e4807faeca3729ca13e&language=en-US"
