@@ -37,10 +37,26 @@ def test_get_recommendations(client):
         # check that each movie id is within the range of possible movie ids
         assert 5 <= id <= 459488
 
-    # bad request
+    # bad request from missing data
     response = client.post(
         "http://127.0.0.1:5000/recommendations/",
         json={"example1": 100, "example2": 200},
+    )
+    assert response.json["status"] == "error"
+    assert response.json["code"] == 400
+
+    # bad request from invalid movie ids
+    response = client.post(
+        "http://127.0.0.1:5000/recommendations/",
+        json={"example1": -1, "example2": -2, "example3": -3},
+    )
+    assert response.json["status"] == "error"
+    assert response.json["code"] == 400
+
+    # bad request from invalid key type
+    response = client.post(
+        "http://127.0.0.1:5000/recommendations/",
+        json={"example1": "100", "example2": "200", "example3": "300"},
     )
     assert response.json["status"] == "error"
     assert response.json["code"] == 400

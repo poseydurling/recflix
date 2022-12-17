@@ -5,12 +5,10 @@ from csv import DictReader
 from src.server.response_error import ResponseError, BadRequestError
 from src.recommender.recommender import Recommender
 
-
 logging.basicConfig(level=logging.INFO)
 
 app = Flask(__name__)
 CORS(app)
-
 
 # handlers
 # response formatting reference: https://github.com/omniti-labs/jsend
@@ -38,7 +36,10 @@ def get_recommendations():
     app.logger.info(f"Example 2: {example2}")
     app.logger.info(f"Example 3: {example3}")
     recommender = Recommender()
-    recommendations = recommender.recommend(example1, example2, example3)
+    try:
+        recommendations = recommender.recommend(example1, example2, example3)
+    except ValueError:
+        raise BadRequestError
     return {"status": "success", "data": recommendations}
 
 
