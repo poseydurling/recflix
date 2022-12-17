@@ -51,7 +51,7 @@
 /* https://rasleen0209.medium.com/styling-a-react-component-using-flexbox-b0f7f73d21b1 
 flexbox with react*/
 
-.movieCard1{ 
+/* .movieCard{ 
   margin: 100px;
   background-color: lightgray;
   height: 350px;
@@ -59,14 +59,9 @@ flexbox with react*/
   width: 250px;
   float: left;
   margin-left: 120px;
-}
+} */
 
-#movieCard1 img{
-  height: 350px;
-  width: 250px;
-}
-
-#movieCard2{ 
+#movieCard{ 
   margin: 100px;
   background-color: lightgray;
   height: 350px;
@@ -74,26 +69,6 @@ flexbox with react*/
   width: 250px;
   float: left;
   margin-left: 120px;
-}
-
-#movieCard2 img{
-  height: 350px;
-  width: 250px;
-}
-
-#movieCard3{ 
-  margin: 100px;
-  background-color: lightgray;
-  height: 350px;
-  margin-top: 60px;
-  width: 250px;
-  float: left;
-  margin-left: 120px;
-}
-
-#movieCard3 img{
-  height: 350px;
-  width: 250px;
 }
 
 #trashIcon{
@@ -101,7 +76,7 @@ flexbox with react*/
   background-color: white;
   border: none;
   height: 25;
-  margin-top: -70px;
+  /* margin-top: 480px; */
   width: 250px;
   float: left;
   margin-left: 120px;
@@ -109,7 +84,7 @@ flexbox with react*/
 
 #recommendButton{
   position: absolute;
-  margin-top: 500px;
-  margin-left: -785px;
+  bottom: 0;
+  left: 45%;
 }
 

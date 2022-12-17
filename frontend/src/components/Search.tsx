@@ -7,6 +7,7 @@ import { fetchPoster } from "../controller/Media";
 import Movie from "./Movie";
 import MoviePoster from "./Movie";
 import { validateLocaleAndSetLanguage } from "typescript";
+import TrashIcon from "./TrashIcon";
 
 
 //https://rsuitejs.com/components/auto-complete/
@@ -15,11 +16,14 @@ import { validateLocaleAndSetLanguage } from "typescript";
 const options = ['Monday', 'Tuesday']
 let count = 0;
 
+
 //to have a shared state variable between search and form we need to make a useState in the class that contains both the search and 
 
 interface Movie {
     movieName: string
 }
+//pass in movie list as prop
+
 export default function Search(props: any) {
     const [movieList, setMList] = useState<Movie[]>([]);
 
@@ -60,7 +64,6 @@ export default function Search(props: any) {
     })
     return (
         <div>
-            {/* onChange={(event) => {setSearch(event.target.value)}} */}
             <AutoComplete style={{ width: '100%' }} id="search-box" placeholder="Enter a movie title here!" data={titleList} value={search} onChange={handleChange} />
             <button type="submit" id="submit1" onClick={async () => {
                 await buildRecommendationsbySearch(search);
@@ -78,12 +81,16 @@ export default function Search(props: any) {
                 setSearch("")
             }}>Search</button>
             <div className="movieCards">
-                {movieList.map(movie => <Movie card="card4" movieName={movie.movieName} />)}
+                {movieList.map(movie => <Movie /*card="card1"*/ movieName={movie.movieName} />)}
             </div>
         </div>
     )
 }
 export let recMovlist: any[] = []
+
+export function handleTrashClick(){
+    
+}
 
 /**
  * 
