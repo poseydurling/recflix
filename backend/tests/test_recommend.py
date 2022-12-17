@@ -1,4 +1,7 @@
 import pytest
+import pandas as pd
+import numpy as np
+from src.recommender.feature import Feature
 from src.recommender.recommender import (
     Recommender,
     get_director,
@@ -6,10 +9,6 @@ from src.recommender.recommender import (
     clean_data,
     create_soup,
 )
-import pandas as pd
-import numpy as np
-
-from src.recommender.feature import Feature
 
 
 def test_recommend():

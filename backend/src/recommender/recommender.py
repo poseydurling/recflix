@@ -2,8 +2,8 @@ import pandas as pd
 import numpy as np
 from ast import literal_eval
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 from src.recommender.feature import Feature
+from src.recommender.distance_metric import cosine_distance
 
 
 class Recommender:
@@ -18,7 +18,10 @@ class Recommender:
         else:
             self.movies = pd.read_csv("src/data/tmdb_5000_default.csv")
 
-    def recommend(self, example1: int, example2: int, example3: int) -> list[int]:
+    def recommend(
+        self, example1: int, example2: int, example3: int, distance_metric=cosine_distance
+    ) -> list[int]:
+        # TODO: change type signature to list of examples and update docstring w distance_metric
         """
         Compute a list of recommendations given three movie examples
 
@@ -55,23 +58,23 @@ class Recommender:
         # aggregate example movie rows into count matrix
         example_count_matrix = np.sum(example_frequencies, axis=0)
 
-        # compute the cosine similarity matrix between the two count matrices
-        # TODO: strategy pattern
-        similarity_matrix = cosine_similarity(
-            np.asarray(example_count_matrix), corpus_count_matrix
+        # compute the distance matrix between the two count matrices
+        distance_matrix = distance_metric(
+            np.asarray(example_count_matrix),
+            # convert sparse matrix to dense matrix for compatibility with all metrics
+            np.asarray(corpus_count_matrix.todense()),
         )
 
-        # convert the similarity matrix into a list of (index, score) tuples
-        similarity_scores: list[tuple[int, float]] = list(
-            enumerate(similarity_matrix[0])
-        )
+        # convert the distance matrix into a list of (index, score) tuples
+        distance_scores: list[tuple[int, float]] = list(enumerate(distance_matrix[0]))
 
-        # sort the tuples based on similarity score
-        similarity_scores = sorted(similarity_scores, key=lambda x: x[1], reverse=True)
+        # sort the tuples in ascending order based on distance score
+        # smaller distance means more similar
+        distance_scores = sorted(distance_scores, key=lambda x: x[1])
 
         # pick the top 10 movies (excluding the provided examples)
         recommendations = []
-        for pair in similarity_scores:
+        for pair in distance_scores:
             if len(recommendations) == 10:
                 break
             movie_id = self.movies.iloc[pair[0]]["id"]
