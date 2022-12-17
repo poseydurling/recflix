@@ -19,23 +19,19 @@ class Recommender:
             self.movies = pd.read_csv("src/data/tmdb_5000_default.csv")
 
     def recommend(
-        self, example1: int, example2: int, example3: int, distance_metric=cosine_distance
+        self, examples: list[int], distance_metric=cosine_distance
     ) -> list[int]:
-        # TODO: change type signature to list of examples and update docstring w distance_metric
         """
         Compute a list of recommendations given three movie examples
 
-        :param example1: the id of the first movie example
-        :param example2: the id of the second movie example
-        :param example3: the id of the third movie example
+        :param examples: a list of movie id examples
+        :param distance_metric: the function to compute the distance between the
+        examples and each movie in the corpus
         :return: a list of ten movie recommendations in the form of ids
         :raises ValueError: if any of the examples do not exist in the dataset
         """
         # validate inputs by rejecting ids that do not exist in the dataset
-        if not all(
-            movie_id in self.movies["id"].values
-            for movie_id in [example1, example2, example3]
-        ):
+        if not all(movie_id in self.movies["id"].values for movie_id in examples):
             raise ValueError
 
         # initialize count vectorizer object
@@ -46,14 +42,13 @@ class Recommender:
 
         # find the index of each example movie
         # [0] is used to select the first element from the output of index, an Int64Index
-        example1_index: int = self.movies.index[self.movies["id"] == example1][0]
-        example2_index: int = self.movies.index[self.movies["id"] == example2][0]
-        example3_index: int = self.movies.index[self.movies["id"] == example3][0]
+        example_indices = []
+        for example in examples:
+            index: int = self.movies.index[self.movies["id"] == example][0]
+            example_indices.append(index)
 
         # create an array consisting of the three example movie count rows
-        example_frequencies = corpus_count_matrix[
-            [example1_index, example2_index, example3_index], :
-        ]
+        example_frequencies = corpus_count_matrix[example_indices, :]
 
         # aggregate example movie rows into count matrix
         example_count_matrix = np.sum(example_frequencies, axis=0)
@@ -79,14 +74,14 @@ class Recommender:
                 break
             movie_id = self.movies.iloc[pair[0]]["id"]
             # prevent recommending examples provided
-            if movie_id in (example1, example2, example3):
+            if movie_id in examples:
                 continue
             recommendations.append(int(movie_id))
 
         return recommendations
 
 
-def construct_dataset(features: set[Feature] = None, path=None):
+def construct_dataset(features: set[Feature] = None, path: str = None):
     """
     Construct a movie + credits dataset to use for computing recommendations.
 
@@ -176,7 +171,7 @@ def clean_data(cell):
         return ""
 
 
-def create_soup(row, features) -> str:
+def create_soup(row, features: set[Feature]) -> str:
     """
     Compile the provided features into a string for the provided row
 

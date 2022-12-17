@@ -18,7 +18,7 @@ def test_recommend():
     :return: None
     """
     recommender = Recommender()
-    recommendations = recommender.recommend(100, 200, 302)
+    recommendations = recommender.recommend([100, 200, 302])
     assert len(recommendations) == 10
     for id in recommendations:
         # check that each movie id is an int
@@ -28,15 +28,15 @@ def test_recommend():
 
     # check that invalid movie ids raise exception
     with pytest.raises(ValueError):
-        recommender.recommend(-1, 100, 100)
-        recommender.recommend(100, -1, 100)
-        recommender.recommend(100, 100, -1)
+        recommender.recommend([-1, 100, 100])
+        recommender.recommend([100, -1, 100])
+        recommender.recommend([100, 100, -1])
 
     # check that create_default_dataset and create_custom_dataset produce the same
     # recommendations when using the same features
     features = {Feature.CAST, Feature.DIRECTOR, Feature.GENRES}
     recommender_custom = Recommender(features)
-    recommendations_custom = recommender_custom.recommend(100, 200, 302)
+    recommendations_custom = recommender_custom.recommend([100, 200, 302])
     assert recommendations == recommendations_custom
 
 

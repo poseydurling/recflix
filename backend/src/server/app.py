@@ -43,7 +43,7 @@ def get_recommendations():
     # produce recommendations
     recommender = Recommender()
     try:
-        recommendations = recommender.recommend(example1, example2, example3)
+        recommendations = recommender.recommend([example1, example2, example3])
     except ValueError:
         raise BadRequestError
     return {"status": "success", "data": recommendations}
