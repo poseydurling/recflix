@@ -185,4 +185,6 @@ def create_soup(row, features: set[Feature]) -> str:
 
 
 if __name__ == "__main__":
-    construct_dataset(path="src/data/tmdb_5000_default.csv")
+    # construct_dataset(path="src/data/tmdb_5000_default.csv")
+    recommender = Recommender()
+    print(recommender.recommend([10764, 37724, 36557]))
