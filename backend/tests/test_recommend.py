@@ -12,19 +12,18 @@ from src.recommender.recommender import (
 
 
 def test_recommend():
-    """
-    Test the recommend function
+    """Test the recommend function.
 
     :return: None
     """
     recommender = Recommender()
     recommendations = recommender.recommend([100, 200, 302])
     assert len(recommendations) == 10
-    for id in recommendations:
+    for movie_id in recommendations:
         # check that each movie id is an int
-        assert type(id) == int
+        assert type(movie_id) == int
         # check that each movie id is within the range of possible movie ids
-        assert 5 <= id <= 459488
+        assert 5 <= movie_id <= 459488
 
     # check that invalid movie ids raise exception
     with pytest.raises(ValueError):
@@ -41,8 +40,7 @@ def test_recommend():
 
 
 def test_get_director():
-    """
-    Test the get_director function
+    """Test the get_director function.
 
     :return: None
     """
@@ -73,8 +71,7 @@ def test_get_director():
 
 
 def test_get_names():
-    """
-    Test the get_names function
+    """Test the get_names function.
 
     :return: None
     """
@@ -145,8 +142,8 @@ def test_get_names():
 
 
 def test_clean_data():
-    """
-    Test the clean_data function which converts all strings to lower case with no spaces
+    """Test the clean_data function which converts all strings to lower case
+    with no spaces.
 
     :return: None
     """
@@ -165,8 +162,8 @@ def test_clean_data():
 
 
 def test_create_soup():
-    """
-    Test the create_soup function which select attributes of a row into a string
+    """Test the create_soup function which select attributes of a row into a
+    string.
 
     :return: None
     """

@@ -8,8 +8,7 @@ from src.recommender.distance_metric import cosine_distance
 
 class Recommender:
     def __init__(self, features: set[Feature] = None):
-        """
-        Constructor for the Recommender class
+        """Constructor for the Recommender class.
 
         :param features: a set of features that will be considered in the recommendation algorithm
         """
@@ -21,12 +20,10 @@ class Recommender:
     def recommend(
         self, examples: list[int], distance_metric=cosine_distance
     ) -> list[int]:
-        """
-        Compute a list of recommendations given three movie examples
+        """Compute a list of recommendations given three movie examples.
 
         :param examples: a list of movie id examples
-        :param distance_metric: the function to compute the distance between the
-        examples and each movie in the corpus
+        :param distance_metric: the function to compute the distance between the examples and each movie in the corpus
         :return: a list of ten movie recommendations in the form of ids
         :raises ValueError: if any of the examples do not exist in the dataset
         """
@@ -82,8 +79,8 @@ class Recommender:
 
 
 def construct_dataset(features: set[Feature] = None, path: str = None):
-    """
-    Construct a movie + credits dataset to use for computing recommendations.
+    """Construct a movie + credits dataset to use for computing
+    recommendations.
 
     :param features: the set of features to be included in the dataset, defaults to None
     :param path: the filepath to write the dataframe data to
@@ -127,8 +124,7 @@ def construct_dataset(features: set[Feature] = None, path: str = None):
 
 
 def get_director(cell):
-    """
-    Get the director's name from the crew data
+    """Get the director's name from the crew data.
 
     :param cell: a list containing crew data in dictionary format
     :return: the name of the director if it exists, np.nan otherwise
@@ -140,8 +136,8 @@ def get_director(cell):
 
 
 def get_names(cell) -> list:
-    """
-    Return a list of the top three names in a cell or the entire list; whichever is more
+    """Return a list of the top three names in a cell or the entire list;
+    whichever is more.
 
     :param cell: a list containing data in dictionary format
     :return: a list of between zero and three names
@@ -157,8 +153,7 @@ def get_names(cell) -> list:
 
 
 def clean_data(cell):
-    """
-    Convert all strings to lower case with no spaces
+    """Convert all strings to lower case with no spaces.
 
     :param cell:  a list or string representing a feature
     :return: the cell with every space removed and every letter lowercase
@@ -172,8 +167,7 @@ def clean_data(cell):
 
 
 def create_soup(row, features: set[Feature]) -> str:
-    """
-    Compile the provided features into a string for the provided row
+    """Compile the provided features into a string for the provided row.
 
     :param row: a Series containing feature data for some movie
     :param features: the set of features to be included in the soup

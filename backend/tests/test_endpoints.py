@@ -10,19 +10,25 @@ def client():
 
 
 def test_titles_to_ids(client):
-    """Tests the /titles_to_ids endpoint in the API"""
+    """Tests the /titles_to_ids endpoint in the API.
+
+    :return: None
+    """
     response = client.get("http://127.0.0.1:5000/titles_to_ids/")
-    for title, id in response.json["data"].items():
+    for title, movie_id in response.json["data"].items():
         # check that each movie title is a str
         assert type(title) == str
         # check that each movie id is an int
-        assert type(id) == int
+        assert type(movie_id) == int
         # check that each movie id is within the range of possible ids
-        assert 5 <= id <= 459488
+        assert 5 <= movie_id <= 459488
 
 
 def test_get_recommendations(client):
-    """Tests the /recommendations endpoint in the API"""
+    """Tests the /recommendations endpoint in the API.
+
+    :return: None
+    """
     response = client.post(
         "http://127.0.0.1:5000/recommendations/",
         json={"example1": 100, "example2": 200, "example3": 302},
@@ -31,11 +37,11 @@ def test_get_recommendations(client):
     data: list[int] = response.json["data"]
     # check that the list contains ten recommendations
     assert len(data) == 10
-    for id in data:
+    for movie_id in data:
         # check that each movie id is an int
-        assert type(id) == int
+        assert type(movie_id) == int
         # check that each movie id is within the range of possible movie ids
-        assert 5 <= id <= 459488
+        assert 5 <= movie_id <= 459488
 
     # bad request from missing data
     response = client.post(

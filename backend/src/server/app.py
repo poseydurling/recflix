@@ -15,17 +15,15 @@ CORS(app)
 # response formatting reference: https://github.com/omniti-labs/jsend
 @app.errorhandler(ResponseError)
 def handle_exception(err):
-    """Returns a JSON when ResponseError or its children are raised"""
+    """Returns a JSON when ResponseError or its children are raised."""
     response = {"status": "error", "message": err.message, "code": err.code}
     return response, err.code
 
 
 @app.route("/recommendations/", methods=["POST"])
 def get_recommendations():
-    """
-    Returns a JSON  containing a list of movie recommendations given three
-    examples
-    """
+    """Returns a JSON  containing a list of movie recommendations given three
+    examples."""
     # expect POST request content type to be application/json
     example1: int = request.json.get("example1")
     example2: int = request.json.get("example2")
@@ -51,7 +49,7 @@ def get_recommendations():
 
 @app.route("/titles_to_ids/", methods=["GET"])
 def get_titles_to_ids():
-    """Returns a JSON containing every movie title and its corresponding id"""
+    """Returns a JSON containing every movie title and its corresponding id."""
     titles_to_ids: dict[str, int] = {}
     with open("src/data/tmdb_5000_movies.csv") as csv:
         reader = DictReader(csv)
