@@ -14,7 +14,7 @@ class Recommender:
         :param features: a set of features that will be considered in the recommendation algorithm
         """
         if features:
-            self.movies = construct_custom_dataset(features)
+            self.movies = construct_dataset(features)
         else:
             self.movies = pd.read_csv("src/data/tmdb_5000_default.csv")
 
@@ -30,7 +30,8 @@ class Recommender:
         """
         # validate inputs by rejecting ids that do not exist in the dataset
         if not all(
-            id in self.movies["id"].values for id in [example1, example2, example3]
+            movie_id in self.movies["id"].values
+            for movie_id in [example1, example2, example3]
         ):
             raise ValueError
 
@@ -73,59 +74,27 @@ class Recommender:
         for pair in similarity_scores:
             if len(recommendations) == 10:
                 break
-            id = self.movies.iloc[pair[0]]["id"]
+            movie_id = self.movies.iloc[pair[0]]["id"]
             # prevent recommending examples provided
-            if id in (example1, example2, example3):
+            if movie_id in (example1, example2, example3):
                 continue
-            recommendations.append(int(self.movies.iloc[pair[0]]["id"]))
+            recommendations.append(int(movie_id))
 
         return recommendations
 
 
-def construct_default_dataset():
+def construct_dataset(features: set[Feature] = None, path=None):
     """
-    Construct the default movie + credits dataset used for computing recommendations. Function
-    application only necessary when file does not already exist or changes are being made.
+    Construct a movie + credits dataset to use for computing recommendations.
 
-    :return: None
+    :param features: the set of features to be included in the dataset, defaults to None
+    :param path: the filepath to write the dataframe data to
+    :return: a dataframe with the movie and credits data merged and a soup column for recommendation
     """
-    # load the data
-    people = pd.read_csv("src/data/tmdb_5000_credits.csv")
-    movies = pd.read_csv("src/data/tmdb_5000_movies.csv")
+    # set default features
+    if features is None:
+        features = {Feature.CAST, Feature.DIRECTOR, Feature.GENRES}
 
-    # merge the two datasets
-    people.columns = ["id", "tittle", "cast", "crew"]
-    movies = movies.merge(people, on="id")
-
-    # parse the cast, crew, and genre data from stringified lists to usable Python objects
-    features = ["cast", "crew", "genres"]
-    for feature in features:
-        movies[feature] = movies[feature].apply(literal_eval)
-
-    # create a new column for directors
-    movies["director"] = movies["crew"].apply(get_director)
-
-    # replace the genre and cast columns with usable data
-    movies["genres"] = movies["genres"].apply(get_names)
-    movies["cast"] = movies["cast"].apply(get_names)
-
-    # apply clean_data to the features
-    features = ["cast", "director", "genres"]
-    for feature in features:
-        movies[feature] = movies[feature].apply(clean_data)
-
-    # create a column containing a string with each movie's features
-    movies["soup"] = movies.apply(create_soup, axis="columns")
-
-    movies.to_csv("src/data/tmdb_5000_default.csv", index=False)
-
-
-def construct_custom_dataset(features: set[Feature]):
-    """
-    Construct a custom movie + credits dataset to use for computing recommendations.
-
-    :return: None
-    """
     # load the data
     people = pd.read_csv("src/data/tmdb_5000_credits.csv")
     movies = pd.read_csv("src/data/tmdb_5000_movies.csv")
@@ -151,6 +120,10 @@ def construct_custom_dataset(features: set[Feature]):
 
     # create a column containing a string with each movie's features
     movies["soup"] = movies.apply(create_soup, args=(features,), axis="columns")
+
+    # write dataframe to csv at path provided
+    if path:
+        movies.to_csv(path, index=False)
 
     return movies
 
@@ -220,4 +193,4 @@ def create_soup(row, features) -> str:
 
 
 if __name__ == "__main__":
-    construct_default_dataset()
+    construct_dataset(path="src/data/tmdb_5000_default.csv")
