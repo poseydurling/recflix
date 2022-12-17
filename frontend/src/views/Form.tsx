@@ -18,6 +18,10 @@ function Form(props: any) {
     console.log("CHECK COUNT HERE " + count)
   };
 
+  const [example1, setExample1] = useState('');
+  const [example2, setExample2] = useState('');
+  const [example3, setExample3] = useState('');
+
   return (
     <div className="App">
       <NavBar></NavBar>
@@ -26,6 +30,9 @@ function Form(props: any) {
       <br></br>
       <Search onClickFunc={props.onClick} searchMovie={props.search} setMovie={props.setSearch} count={count} setCount={updateCount} />
       <div className='movieCards'>
+        <Movie state={example1}/>
+        <Movie state={example2}/>
+        <Movie state={example3}/>
       </div>
       <RecommendButton></RecommendButton>
     </div>
