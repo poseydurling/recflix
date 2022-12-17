@@ -6,7 +6,7 @@ import RecommendButton from '../components/RecommendButton'
 import TrashIcon from '../components/TrashIcon'
 import { useState } from 'react'
 import React from 'react'
-
+import Movie from '../components/Movie'
 
 function Form(props: any) {
   const [count, setCount] = useState(0)
@@ -30,9 +30,9 @@ function Form(props: any) {
       <br></br>
       <Search onClickFunc={props.onClick} searchMovie={props.search} setMovie={props.setSearch} count={count} setCount={updateCount} />
       <div className='movieCards'>
-        <Movie state={example1}/>
-        <Movie state={example2}/>
-        <Movie state={example3}/>
+        {/* <Movie movieName={example1}/> 
+        <Movie movieName={example2}/>
+        <Movie movieName={example3}/> */}
       </div>
       <RecommendButton></RecommendButton>
     </div>
