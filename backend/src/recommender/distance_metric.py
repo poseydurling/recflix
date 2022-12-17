@@ -1,7 +1,7 @@
 from sklearn.metrics.pairwise import pairwise_distances
 
 # pairwise distances reference: https://scikit-learn.org/0.15/modules/generated/sklearn.metrics.pairwise.pairwise_distances.html
-def distance_metric(X, Y, metric):
+def distance_metric(X, Y):
     """A pseudo-interface for the below distance metric functions.
 
     :param X: an array of ints
