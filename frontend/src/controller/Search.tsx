@@ -1,5 +1,4 @@
 import { sendPost } from "../components/RecommendButton";
-import { useState } from "react";
 import { keys } from 'ts-transformer-keys';
 
 let examples: number[] = [];
@@ -8,7 +7,7 @@ interface DB {
   [name: string]: number;
 }
 
-//get master list of all movie titles to IDs
+//Gets a master list of all movie titles to IDs
 export async function getAllMovies() {
   const response = await fetch('http://127.0.0.1:5000/titles_to_ids/', {
     mode: 'cors',
@@ -17,10 +16,7 @@ export async function getAllMovies() {
     }
   })
   const moviedata = await response.json()
-
-
   return moviedata.data;
-
 }
 
 export async function getMovieTitleList() {
@@ -31,15 +27,12 @@ export async function getMovieTitleList() {
     }
   })
   const moviedata = await response.json()
-
-
   return Object.keys(moviedata.data);
-
 }
 
-export let movieID = [0, 0, 0]; //three user inputted movie IDs
-let movieIndex = 0; //movId index
-let movieCount = 0; //counts for number of searched movies
+export let movieID = [0, 0, 0]; //Three user inputted movie IDs
+let movieIndex = 0; //MovieID index
+let movieCount = 0; //Counts the number of searched movies
 var dataDB: (DB | null) = null;
 
 export async function getMovieTitlesFromMap() {
@@ -49,12 +42,12 @@ export async function getMovieTitlesFromMap() {
 }
 
 export async function updateExamples(title : string){
-  //make sure cache is empty
+  //Makes sure cache is empty
   if (dataDB === null) {
-    //if it's empty get the master list of movies
+    //If it's empty get the master list of movies
     dataDB = await getAllMovies() as DB
   }
-  //throw alert if movie title doesn't exist
+  //Throws alert if movie title doesn't exist
   if (dataDB[title] === null) {
     throw new Error("No match exist!")
   }
@@ -63,21 +56,19 @@ export async function updateExamples(title : string){
   return examples;
 }
 
-
 export async function getRecommendation(name: string) {
-  // const [movieId, getmoiveID] = useState[('')]; 
-  //if there's no user input --> alert user
+  //If there's no user input --> alert user
   if (name === "") {
     alert("No search input")
     return null;
   } else {
-    //make sure cache is empty
+    //Make sure cache is empty
     if (dataDB === null) {
       //if it's empty get the master list of movies
       dataDB = await getAllMovies() as DB
     }
 
-    //throw alert if movie title doesn't exist
+    //Throw alert if movie title doesn't exist
     if (dataDB[name] == null) {
       alert("No match exist!")
       return null;
@@ -88,14 +79,12 @@ export async function getRecommendation(name: string) {
       movieID[movieIndex] = id
       console.log("set movieID to" + movieID)
 
-
-
-      //the following checks to make sure there are 3 movies is not based on number of 
+      //The following checks to make sure there are 3 movies is not based on number of 
       //clicks on the search button but rather the search button triggers the
       //fetches that populate the movieID list and based on what's in that list
-      //we check to see if three movies have been inputted
+      //we check to see if three movies have been inputted.
 
-      //check to make sure that user inputs three movies based on indices of array
+      //Checks to make sure that user inputs three movies based on indices of array
       if (movieIndex == 2) {
         movieIndex = 0
       } else {
@@ -103,7 +92,7 @@ export async function getRecommendation(name: string) {
       }
 
       if (movieCount > 1) {
-        //if there are three movies then send post request
+        //If there are three movies then send post request
         const recommendedOuput = await sendPost(movieID)
         return recommendedOuput
       } else {
