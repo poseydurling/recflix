@@ -21,22 +21,23 @@ function App () {
   const [card2, setcard2] = useState('');
   const [card3, setcard3] = useState('');
 
-  const handleSettingCard = async()=>{
-    const posterResponse1 = await fetchPoster(search);
-    // setcard1(posterResponse1)
+  // const handleSettingCard = async()=>{
+  //   const posterResponse1 = await fetchPoster(search);
+  //   // setcard1(posterResponse1)
 
-    const posterResponse2 = await fetchPoster(search);
-    // setcard2(posterResponse2)
+  //   const posterResponse2 = await fetchPoster(search);
+  //   // setcard2(posterResponse2)
 
-    const posterResponse3 = await fetchPoster(search);
-    // setcard3(posterResponse3)
-  }
+  //   const posterResponse3 = await fetchPoster(search);
+  //   // setcard3(posterResponse3)
+  // }
   return (
     <BrowserRouter>
       <Routes>
-        <Route path = "/" element={<Form card1={card1} card2={card2} card3={card3} onClick={handleSettingCard} search={search} setSearch={setSearch}/>} />
+        <Route path = "/" element={<Form card1={card1} card2={card2} card3={card3}  search={search} setSearch={setSearch}/>} />
         <Route path="/recommendationPage" element={<Recommendation/>} />
         {/* <Route path="/newRecommendationPage" element={<NewRecommendation/>} /> */}
+     <Route path = "/" element={<Form card1={card1} card2={card2} card3={card3}  search={search} setSearch={setSearch}/>} />
       </Routes>
     </BrowserRouter>
     

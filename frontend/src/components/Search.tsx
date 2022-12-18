@@ -4,7 +4,7 @@ import { AutoComplete } from 'rsuite'
 import 'rsuite/dist/rsuite.min.css';
 import { getMovieTitlesFromMap } from "../controller/Search";
 import { fetchPoster } from "../controller/Media";
-import Movie from "./Movie";
+import Movie, { MovieMetaData } from "./Movie";
 import MoviePoster from "./Movie";
 import { validateLocaleAndSetLanguage } from "typescript";
 import TrashIcon from "./TrashIcon";
@@ -35,6 +35,7 @@ export default function Search({setMovie1, setMovie2, setMovie3}: SearchProps) {
     const [titleList, setTitleList] = useState(['']);
     const [input, setInput] = useState('');
 
+
     const finalName = async () => {
         const response = await getMovieTitleList();
         setTitleList(response)
@@ -47,21 +48,35 @@ export default function Search({setMovie1, setMovie2, setMovie3}: SearchProps) {
     useEffect(() => {
         finalName()
     })
+
+
+
+
     return (
         <div>
             <AutoComplete style={{ width: '100%' }} id="search-box" placeholder="Enter a movie title here!" data={titleList} value={input} onChange={handleInputChange} />
             <button type="submit" id="submit1" onClick={async () => {
                 await buildRecommendationsbySearch(input);
-                const posterPath = await fetchPoster(input);
+            
+                const posterPath = await fetchPoster(input, count);
                 //send new request for poster each time
                 if(count == 0){
                     setMovie1(input, posterPath);
+                    count++
+                    console.log('INPUT', input)
+                    console.log("DEBUG 1")
+                    console.log("POSTER 1",  posterPath)
                 } else if (count == 1){
                     setMovie2(input, posterPath);
+                    count++
+                    console.log('INPUT2', input)
+                    console.log('DEBUG 2')
+                    console.log("POSTER 2",  posterPath)
                 } else if (count == 2) {
                     setMovie3(input, posterPath);
-                }
-                count++;
+                    count = 0
+                } 
+               
                 
                 let result = input
                 let newMovie = { movieName: result }
@@ -98,3 +113,4 @@ async function buildRecommendationsbySearch(search: string) {
         }
     }
 }
+

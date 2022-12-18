@@ -108,6 +108,6 @@ export async function getMovieDetails(movid: number) {
     const url = "https://api.themoviedb.org/3/movie/"+movid+"?api_key=ca80130f34859e4807faeca3729ca13e&language=en-US"
     const response = await fetch(url)
     const movieinfo = await response.json()
-    console.log(movieinfo)
+    // console.log(movieinfo)
     return movieinfo
 }
