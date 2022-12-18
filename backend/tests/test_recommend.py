@@ -4,10 +4,16 @@ import numpy as np
 from src.recommender.feature import Feature
 from src.recommender.recommender import (
     Recommender,
+    construct_dataset,
     get_director,
     get_names,
     clean_data,
     create_soup,
+)
+from src.recommender.distance_metric import (
+    cosine_distance,
+    correlation_distance,
+    euclidean_distance,
 )
 
 
@@ -37,6 +43,18 @@ def test_recommend():
     recommender_custom = Recommender(features)
     recommendations_custom = recommender_custom.recommend([100, 200, 302])
     assert recommendations == recommendations_custom
+
+    # check that different distance metrics do not cause error
+    assert recommender.recommend([100, 200, 302], distance_metric=cosine_distance)
+    assert recommender.recommend([100, 200, 302], distance_metric=correlation_distance)
+    assert recommender.recommend([100, 200, 302], distance_metric=euclidean_distance)
+
+    # check that custom filepaths are supported
+    path = "src/data/tmdb_5000_test.csv"
+    construct_dataset(path="src/data/tmdb_5000_test.csv")
+    recommender_path = Recommender(path=path)
+    recommendations_path = recommender_path.recommend([100, 200, 302])
+    assert recommendations_path == recommendations
 
 
 def test_get_director():
