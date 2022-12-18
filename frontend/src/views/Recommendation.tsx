@@ -35,18 +35,19 @@ function Recommendation() {
             const recommendation = await getMovieDetails(recId[0])
             const recPosterPath=  "https://image.tmdb.org/t/p/original/" + recommendation.poster_path
             const recTitle = recommendation.original_title
-            console.log(recTitle)
-            console.log(recPosterPath)
+            // console.log(recTitle)
+            // console.log(recPosterPath)
             setDisplayData({name: recTitle, posterPath: recPosterPath})
  
         }
     }
  
     useEffect(() => {
-        console.log("Check that rec button use effect is called")
+        // console.log("Check that rec button use effect is called")
         const getRecommendationInfo = async() => 
         {
             await getMovieInformation(recMovlist)
+            console.log(recMovlist)
         
         }
         getRecommendationInfo()
@@ -87,7 +88,7 @@ function Recommendation() {
             <NavBar></NavBar>
             <div>We recommend...</div>
             <Movie movieMetaData={displayData} ></Movie>
-            <TryAgainButton></TryAgainButton>
+            <TryAgainButton    ></TryAgainButton>
             <NewRequestButton></NewRequestButton>
 
 

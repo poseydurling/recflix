@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-
+import setCount from "./TryAgainButton"
 export default function NewRequestButton() {
     const navigateToRecPage = useNavigate();
 
@@ -8,7 +8,11 @@ export default function NewRequestButton() {
     return (
         <div>
             <button type="submit" id="newRequestButton"
-                onClick={() => navigateToRecPage('/')}
+                onClick={() => { navigateToRecPage('/')
+                setCount()
+    }
+            
+    }
             /*onClick={() => {getMovieAutocomplete(search)}}*/>Go Back to Home</button>
 
         </div>
