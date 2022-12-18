@@ -62,6 +62,14 @@ def test_get_recommendations(client):
     # bad request from invalid key type
     response = client.post(
         "http://127.0.0.1:5000/recommendations/",
+        json={0: 100, 1: 200, 2: 300},
+    )
+    assert response.json["status"] == "error"
+    assert response.json["code"] == 400
+
+    # bad request from invalid value type
+    response = client.post(
+        "http://127.0.0.1:5000/recommendations/",
         json={"example1": "100", "example2": "200", "example3": "300"},
     )
     assert response.json["status"] == "error"
