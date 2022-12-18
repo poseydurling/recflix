@@ -63,6 +63,7 @@ export async function updateExamples(title : string){
   return examples;
 }
 
+
 export async function getRecommendation(name: string) {
   // const [movieId, getmoiveID] = useState[('')]; 
   //if there's no user input --> alert user
