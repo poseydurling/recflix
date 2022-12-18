@@ -4,15 +4,19 @@ from ast import literal_eval
 from sklearn.feature_extraction.text import CountVectorizer
 from src.recommender.feature import Feature
 from src.recommender.distance_metric import cosine_distance
+from src.recommender.distance_metric import correlation_distance
 
 
 class Recommender:
-    def __init__(self, features: set[Feature] = None):
+    def __init__(self, features: set[Feature] = None, path: str = None):
         """Constructor for the Recommender class.
 
         :param features: a set of features that will be considered in the recommendation algorithm
+        :param path: the filepath to read the dataframe data from
         """
-        if features:
+        if path:
+            self.movies = pd.read_csv(path)
+        elif features:
             self.movies = construct_dataset(features)
         else:
             self.movies = pd.read_csv("src/data/tmdb_5000_default.csv")
@@ -191,6 +195,8 @@ def create_soup(row, features: set[Feature]) -> str:
 
 
 if __name__ == "__main__":
-    construct_dataset(path="src/data/tmdb_5000_default.csv")
+    # path = "src/data/tmdb_5000_new.csv"
+    # construct_dataset(path=path)
+    # recommender = Recommender(path=path)
     recommender = Recommender()
-    print(recommender.recommend([10764, 37724, 36557]))
+    print(recommender.recommend([10764, 37724, 36557], correlation_distance))
