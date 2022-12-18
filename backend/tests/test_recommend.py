@@ -1,49 +1,64 @@
 import pytest
+import pandas as pd
+import numpy as np
+from src.recommender.feature import Feature
 from src.recommender.recommender import (
     Recommender,
+    construct_dataset,
     get_director,
     get_names,
     clean_data,
     create_soup,
 )
-import pandas as pd
-import numpy as np
-
-from src.recommender.feature import Feature
+from src.recommender.distance_metric import (
+    cosine_distance,
+    correlation_distance,
+    euclidean_distance,
+)
 
 
 def test_recommend():
-    """
-    Test the recommend function
+    """Test the recommend function.
 
     :return: None
     """
     recommender = Recommender()
-    recommendations = recommender.recommend(100, 200, 302)
+    recommendations = recommender.recommend([100, 200, 302])
     assert len(recommendations) == 10
-    for id in recommendations:
+    for movie_id in recommendations:
         # check that each movie id is an int
-        assert type(id) == int
+        assert type(movie_id) == int
         # check that each movie id is within the range of possible movie ids
-        assert 5 <= id <= 459488
+        assert 5 <= movie_id <= 459488
 
     # check that invalid movie ids raise exception
     with pytest.raises(ValueError):
-        recommender.recommend(-1, 100, 100)
-        recommender.recommend(100, -1, 100)
-        recommender.recommend(100, 100, -1)
+        recommender.recommend([-1, 100, 100])
+        recommender.recommend([100, -1, 100])
+        recommender.recommend([100, 100, -1])
 
     # check that create_default_dataset and create_custom_dataset produce the same
     # recommendations when using the same features
-    features = {Feature.CAST, Feature.DIRECTOR, Feature.GENRES}
+    features = {Feature.CAST, Feature.DIRECTOR, Feature.GENRES, Feature.KEYWORDS}
     recommender_custom = Recommender(features)
-    recommendations_custom = recommender_custom.recommend(100, 200, 302)
+    recommendations_custom = recommender_custom.recommend([100, 200, 302])
     assert recommendations == recommendations_custom
+
+    # check that different distance metrics do not cause error
+    assert recommender.recommend([100, 200, 302], distance_metric=cosine_distance)
+    assert recommender.recommend([100, 200, 302], distance_metric=correlation_distance)
+    assert recommender.recommend([100, 200, 302], distance_metric=euclidean_distance)
+
+    # check that custom filepaths are supported
+    path = "src/data/tmdb_5000_test.csv"
+    construct_dataset(path="src/data/tmdb_5000_test.csv")
+    recommender_path = Recommender(path=path)
+    recommendations_path = recommender_path.recommend([100, 200, 302])
+    assert recommendations_path == recommendations
 
 
 def test_get_director():
-    """
-    Test the get_director function
+    """Test the get_director function.
 
     :return: None
     """
@@ -74,8 +89,7 @@ def test_get_director():
 
 
 def test_get_names():
-    """
-    Test the get_names function
+    """Test the get_names function.
 
     :return: None
     """
@@ -146,8 +160,8 @@ def test_get_names():
 
 
 def test_clean_data():
-    """
-    Test the clean_data function which converts all strings to lower case with no spaces
+    """Test the clean_data function which converts all strings to lower case
+    with no spaces.
 
     :return: None
     """
@@ -166,8 +180,8 @@ def test_clean_data():
 
 
 def test_create_soup():
-    """
-    Test the create_soup function which select attributes of a row into a string
+    """Test the create_soup function which select attributes of a row into a
+    string.
 
     :return: None
     """

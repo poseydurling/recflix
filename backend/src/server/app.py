@@ -5,7 +5,6 @@ from csv import DictReader
 from src.server.response_error import ResponseError, BadRequestError
 from src.recommender.recommender import Recommender
 
-
 logging.basicConfig(level=logging.INFO)
 
 app = Flask(__name__)
@@ -16,35 +15,41 @@ CORS(app)
 # response formatting reference: https://github.com/omniti-labs/jsend
 @app.errorhandler(ResponseError)
 def handle_exception(err):
-    """Returns a JSON when ResponseError or its children are raised"""
+    """Returns a JSON when ResponseError or its children are raised."""
     response = {"status": "error", "message": err.message, "code": err.code}
     return response, err.code
 
 
 @app.route("/recommendations/", methods=["POST"])
 def get_recommendations():
-    """
-    Returns a JSON  containing a list of movie recommendations given three
-    examples
-    """
+    """Returns a JSON  containing a list of movie recommendations given three
+    examples."""
     # expect POST request content type to be application/json
     example1: int = request.json.get("example1")
     example2: int = request.json.get("example2")
     example3: int = request.json.get("example3")
     # raise error if one or more examples are null
-    if not example1 or not example2 or not example3:
+    if example1 is None or example2 is None or example3 is None:
         raise BadRequestError
-    app.logger.info(f"Example 1: {example1}")
-    app.logger.info(f"Example 2: {example2}")
-    app.logger.info(f"Example 3: {example3}")
+    # raise error if one or more of the examples are not an int
+    if (
+        type(example1) is not int
+        or type(example2) is not int
+        or type(example3) is not int
+    ):
+        raise BadRequestError
+    # produce recommendations
     recommender = Recommender()
-    recommendations = recommender.recommend(example1, example2, example3)
+    try:
+        recommendations = recommender.recommend([example1, example2, example3])
+    except ValueError:
+        raise BadRequestError
     return {"status": "success", "data": recommendations}
 
 
 @app.route("/titles_to_ids/", methods=["GET"])
 def get_titles_to_ids():
-    """Returns a JSON containing every movie title and its corresponding id"""
+    """Returns a JSON containing every movie title and its corresponding id."""
     titles_to_ids: dict[str, int] = {}
     with open("src/data/tmdb_5000_movies.csv") as csv:
         reader = DictReader(csv)

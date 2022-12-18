@@ -2,10 +2,10 @@ node_modules
 *.iml
 target
 
-# IntelliJ IDEA files
+# intelliJ IDEA files
 .idea
 
-# VS Code files
+# vs code files
 .vscode/
 __pycache__
 .pytest_cache/
@@ -16,5 +16,8 @@ __pycache__
 # env variables
 frontend/src/private/*
 
-# Virtual environment
+# virtual environment
 env/
+
+# backend test files
+backend/src/data/tmdb_5000_test.csv
