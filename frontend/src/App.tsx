@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { BrowserRouter, Route, Routes, Router, createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.css'
 import Form from './views/Form';
-import NewRecommendation from './views/NewRecommendation';
+
 import Recommendation from './views/Recommendation';
 import { fetchPoster } from './controller/Media';
-import {movieID} from './controller/Search'
+import {movieID} from './controller/Search';
+// import NewRecommendation from './views/NewRecommendation'
+
 
 
 
@@ -34,7 +36,7 @@ function App () {
       <Routes>
         <Route path = "/" element={<Form card1={card1} card2={card2} card3={card3} onClick={handleSettingCard} search={search} setSearch={setSearch}/>} />
         <Route path="/recommendationPage" element={<Recommendation/>} />
-        <Route path="/newRecommendationPage" element={<NewRecommendation/>} />
+        {/* <Route path="/newRecommendationPage" element={<NewRecommendation/>} /> */}
       </Routes>
     </BrowserRouter>
     
