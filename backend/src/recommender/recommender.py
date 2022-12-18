@@ -2,36 +2,37 @@ import pandas as pd
 import numpy as np
 from ast import literal_eval
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 from src.recommender.feature import Feature
+from src.recommender.distance_metric import cosine_distance
+from src.recommender.distance_metric import correlation_distance
 
 
 class Recommender:
-    def __init__(self, features: set[Feature] = None):
-        """
-        Constructor for the Recommender class
+    def __init__(self, features: set[Feature] = None, path: str = None):
+        """Constructor for the Recommender class.
 
         :param features: a set of features that will be considered in the recommendation algorithm
+        :param path: the filepath to read the dataframe data from
         """
-        if features:
-            self.movies = construct_custom_dataset(features)
+        if path:
+            self.movies = pd.read_csv(path)
+        elif features:
+            self.movies = construct_dataset(features)
         else:
             self.movies = pd.read_csv("src/data/tmdb_5000_default.csv")
 
-    def recommend(self, example1: int, example2: int, example3: int) -> list[int]:
-        """
-        Compute a list of recommendations given three movie examples
+    def recommend(
+        self, examples: list[int], distance_metric=cosine_distance
+    ) -> list[int]:
+        """Compute a list of recommendations given three movie examples.
 
-        :param example1: the id of the first movie example
-        :param example2: the id of the second movie example
-        :param example3: the id of the third movie example
+        :param examples: a list of movie id examples
+        :param distance_metric: the function to compute the distance between the examples and each movie in the corpus
         :return: a list of ten movie recommendations in the form of ids
         :raises ValueError: if any of the examples do not exist in the dataset
         """
         # validate inputs by rejecting ids that do not exist in the dataset
-        if not all(
-            id in self.movies["id"].values for id in [example1, example2, example3]
-        ):
+        if not all(movie_id in self.movies["id"].values for movie_id in examples):
             raise ValueError
 
         # initialize count vectorizer object
@@ -42,90 +43,58 @@ class Recommender:
 
         # find the index of each example movie
         # [0] is used to select the first element from the output of index, an Int64Index
-        example1_index: int = self.movies.index[self.movies["id"] == example1][0]
-        example2_index: int = self.movies.index[self.movies["id"] == example2][0]
-        example3_index: int = self.movies.index[self.movies["id"] == example3][0]
+        example_indices = []
+        for example in examples:
+            index: int = self.movies.index[self.movies["id"] == example][0]
+            example_indices.append(index)
 
         # create an array consisting of the three example movie count rows
-        example_frequencies = corpus_count_matrix[
-            [example1_index, example2_index, example3_index], :
-        ]
+        example_frequencies = corpus_count_matrix[example_indices, :]
 
         # aggregate example movie rows into count matrix
         example_count_matrix = np.sum(example_frequencies, axis=0)
 
-        # compute the cosine similarity matrix between the two count matrices
-        # TODO: strategy pattern
-        similarity_matrix = cosine_similarity(
-            np.asarray(example_count_matrix), corpus_count_matrix
+        # compute the distance matrix between the two count matrices
+        distance_matrix = distance_metric(
+            np.asarray(example_count_matrix),
+            # convert sparse matrix to dense matrix for compatibility with all metrics
+            np.asarray(corpus_count_matrix.todense()),
         )
 
-        # convert the similarity matrix into a list of (index, score) tuples
-        similarity_scores: list[tuple[int, float]] = list(
-            enumerate(similarity_matrix[0])
-        )
+        # convert the distance matrix into a list of (index, score) tuples
+        distance_scores: list[tuple[int, float]] = list(enumerate(distance_matrix[0]))
 
-        # sort the tuples based on similarity score
-        similarity_scores = sorted(similarity_scores, key=lambda x: x[1], reverse=True)
+        # sort the tuples in ascending order based on distance score
+        # smaller distance means more similar
+        distance_scores = sorted(distance_scores, key=lambda x: x[1])
 
         # pick the top 10 movies (excluding the provided examples)
         recommendations = []
-        for pair in similarity_scores:
+        for pair in distance_scores:
             if len(recommendations) == 10:
                 break
-            id = self.movies.iloc[pair[0]]["id"]
+            movie_id = self.movies.iloc[pair[0]]["id"]
             # prevent recommending examples provided
-            if id in (example1, example2, example3):
+            if movie_id in examples:
                 continue
-            recommendations.append(int(self.movies.iloc[pair[0]]["id"]))
+            recommendations.append(int(movie_id))
 
         return recommendations
 
 
-def construct_default_dataset():
+def construct_dataset(features: set[Feature] = None, path: str = None):
+    """Construct a movie + credits dataset to use for computing
+    recommendations. Optionally write the dataframe to a csv at the provided
+    path.
+
+    :param features: the set of features to be included in the dataset, defaults to None
+    :param path: the filepath to write the dataframe data to
+    :return: a dataframe with the movie and credits data merged and a soup column for recommendation
     """
-    Construct the default movie + credits dataset used for computing recommendations. Function
-    application only necessary when file does not already exist or changes are being made.
+    # set default features
+    if features is None:
+        features = {Feature.CAST, Feature.DIRECTOR, Feature.GENRES, Feature.KEYWORDS}
 
-    :return: None
-    """
-    # load the data
-    people = pd.read_csv("src/data/tmdb_5000_credits.csv")
-    movies = pd.read_csv("src/data/tmdb_5000_movies.csv")
-
-    # merge the two datasets
-    people.columns = ["id", "tittle", "cast", "crew"]
-    movies = movies.merge(people, on="id")
-
-    # parse the cast, crew, and genre data from stringified lists to usable Python objects
-    features = ["cast", "crew", "genres"]
-    for feature in features:
-        movies[feature] = movies[feature].apply(literal_eval)
-
-    # create a new column for directors
-    movies["director"] = movies["crew"].apply(get_director)
-
-    # replace the genre and cast columns with usable data
-    movies["genres"] = movies["genres"].apply(get_names)
-    movies["cast"] = movies["cast"].apply(get_names)
-
-    # apply clean_data to the features
-    features = ["cast", "director", "genres"]
-    for feature in features:
-        movies[feature] = movies[feature].apply(clean_data)
-
-    # create a column containing a string with each movie's features
-    movies["soup"] = movies.apply(create_soup, axis="columns")
-
-    movies.to_csv("src/data/tmdb_5000_default.csv", index=False)
-
-
-def construct_custom_dataset(features: set[Feature]):
-    """
-    Construct a custom movie + credits dataset to use for computing recommendations.
-
-    :return: None
-    """
     # load the data
     people = pd.read_csv("src/data/tmdb_5000_credits.csv")
     movies = pd.read_csv("src/data/tmdb_5000_movies.csv")
@@ -148,16 +117,23 @@ def construct_custom_dataset(features: set[Feature]):
         movies["cast"] = movies["cast"].apply(literal_eval)
         movies["cast"] = movies["cast"].apply(get_names)
         movies["cast"] = movies["cast"].apply(clean_data)
+    if Feature.KEYWORDS in features:
+        movies["keywords"] = movies["keywords"].apply(literal_eval)
+        movies["keywords"] = movies["keywords"].apply(get_names)
+        movies["keywords"] = movies["keywords"].apply(clean_data)
 
     # create a column containing a string with each movie's features
     movies["soup"] = movies.apply(create_soup, args=(features,), axis="columns")
+
+    # write dataframe to csv at path provided
+    if path:
+        movies.to_csv(path, index=False)
 
     return movies
 
 
 def get_director(cell):
-    """
-    Get the director's name from the crew data
+    """Get the director's name from the crew data.
 
     :param cell: a list containing crew data in dictionary format
     :return: the name of the director if it exists, np.nan otherwise
@@ -169,8 +145,8 @@ def get_director(cell):
 
 
 def get_names(cell) -> list:
-    """
-    Return a list of the top three names in a cell or the entire list; whichever is more
+    """Return a list of the top three names in a cell or the entire list;
+    whichever is more.
 
     :param cell: a list containing data in dictionary format
     :return: a list of between zero and three names
@@ -186,8 +162,7 @@ def get_names(cell) -> list:
 
 
 def clean_data(cell):
-    """
-    Convert all strings to lower case with no spaces
+    """Convert all strings to lower case with no spaces.
 
     :param cell:  a list or string representing a feature
     :return: the cell with every space removed and every letter lowercase
@@ -200,9 +175,8 @@ def clean_data(cell):
         return ""
 
 
-def create_soup(row, features) -> str:
-    """
-    Compile the provided features into a string for the provided row
+def create_soup(row, features: set[Feature]) -> str:
+    """Compile the provided features into a string for the provided row.
 
     :param row: a Series containing feature data for some movie
     :param features: the set of features to be included in the soup
@@ -210,14 +184,19 @@ def create_soup(row, features) -> str:
     """
     soup = ""
     if Feature.CAST in features:
-        soup += " ".join(row["cast"]) + " "
+        soup += " ".join(row["cast"])
     if Feature.DIRECTOR in features:
-        soup += row["director"] + " "
+        soup += " " + row["director"]
     if Feature.GENRES in features:
-        soup += " ".join(row["genres"])
-    # remove trailing spaces
-    return soup.strip()
+        soup += " " + " ".join(row["genres"])
+    if Feature.KEYWORDS in features:
+        soup += " " + " ".join(row["keywords"])
+    return soup
 
 
 if __name__ == "__main__":
-    construct_default_dataset()
+    # path = "src/data/tmdb_5000_new.csv"
+    # construct_dataset(path=path)
+    # recommender = Recommender(path=path)
+    recommender = Recommender()
+    print(recommender.recommend([10764, 37724, 36557], correlation_distance))
