@@ -44,17 +44,18 @@ As a developer, there are a few ways for you to customize the recommendation alg
 1. You can specify which features to consider using the `Feature` enum. The default features used are `CAST`, `DIRECTOR`, `GENRES`, and `KEYWORDS`, but you can select any combination of these by instantating a `Recommender` object with a custom `set` of `Feature`s. For example,
 
     ```python
-    features = {Feature.CAST, FEATURE.Director}
+    features = {Feature.CAST, Feature.DIRECTOR}
     recommender = Recommender(features)
     ```
 
-2. You can pre-compute the dataset used to compute the recommendations by calling `construct_dataset` with a filepath. Pass in the the filepath to the `Recommender` contructor and the runtime will improve dramatiically in future calls. For example,
+2. You can pre-compute the dataset used to compute the recommendations by calling `construct_dataset` with a filepath. Pass in the the filepath to the `Recommender` contructor and the runtime will improve dramatically in future calls. For example,
 
     ```python
+    features = {Feature.CAST, Feature.DIRECTOR}
+    recommender = Recommender(features) # slow
     path = "src/data/tmdb_5000_new.csv"
-    construct_dataset(path=path)
-    recommender1 = Recommender(path=path) # slow
-    recommender2 = Recommender(path=path) # very fast
+    construct_dataset(features, path=path)
+    recommender = Recommender(features, path=path) # very fast
     ```
 
     > Note that keyword arguments are required when passing in only the filepath.
