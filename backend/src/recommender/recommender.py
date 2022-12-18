@@ -80,7 +80,8 @@ class Recommender:
 
 def construct_dataset(features: set[Feature] = None, path: str = None):
     """Construct a movie + credits dataset to use for computing
-    recommendations.
+    recommendations. Optionally write the dataframe to a csv at the provided
+    path.
 
     :param features: the set of features to be included in the dataset, defaults to None
     :param path: the filepath to write the dataframe data to
@@ -88,7 +89,7 @@ def construct_dataset(features: set[Feature] = None, path: str = None):
     """
     # set default features
     if features is None:
-        features = {Feature.CAST, Feature.DIRECTOR, Feature.GENRES}
+        features = {Feature.CAST, Feature.DIRECTOR, Feature.GENRES, Feature.KEYWORDS}
 
     # load the data
     people = pd.read_csv("src/data/tmdb_5000_credits.csv")
@@ -112,6 +113,10 @@ def construct_dataset(features: set[Feature] = None, path: str = None):
         movies["cast"] = movies["cast"].apply(literal_eval)
         movies["cast"] = movies["cast"].apply(get_names)
         movies["cast"] = movies["cast"].apply(clean_data)
+    if Feature.KEYWORDS in features:
+        movies["keywords"] = movies["keywords"].apply(literal_eval)
+        movies["keywords"] = movies["keywords"].apply(get_names)
+        movies["keywords"] = movies["keywords"].apply(clean_data)
 
     # create a column containing a string with each movie's features
     movies["soup"] = movies.apply(create_soup, args=(features,), axis="columns")
@@ -175,16 +180,17 @@ def create_soup(row, features: set[Feature]) -> str:
     """
     soup = ""
     if Feature.CAST in features:
-        soup += " ".join(row["cast"]) + " "
+        soup += " ".join(row["cast"])
     if Feature.DIRECTOR in features:
-        soup += row["director"] + " "
+        soup += " " + row["director"]
     if Feature.GENRES in features:
-        soup += " ".join(row["genres"])
-    # remove trailing spaces
-    return soup.strip()
+        soup += " " + " ".join(row["genres"])
+    if Feature.KEYWORDS in features:
+        soup += " " + " ".join(row["keywords"])
+    return soup
 
 
 if __name__ == "__main__":
-    # construct_dataset(path="src/data/tmdb_5000_default.csv")
+    construct_dataset(path="src/data/tmdb_5000_default.csv")
     recommender = Recommender()
     print(recommender.recommend([10764, 37724, 36557]))

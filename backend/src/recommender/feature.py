@@ -7,3 +7,4 @@ class Feature(Enum):
     CAST = "cast"
     DIRECTOR = "director"
     GENRES = "genres"
+    KEYWORDS = "keywords"

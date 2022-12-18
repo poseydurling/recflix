@@ -33,7 +33,7 @@ def test_recommend():
 
     # check that create_default_dataset and create_custom_dataset produce the same
     # recommendations when using the same features
-    features = {Feature.CAST, Feature.DIRECTOR, Feature.GENRES}
+    features = {Feature.CAST, Feature.DIRECTOR, Feature.GENRES, Feature.KEYWORDS}
     recommender_custom = Recommender(features)
     recommendations_custom = recommender_custom.recommend([100, 200, 302])
     assert recommendations == recommendations_custom
