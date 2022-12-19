@@ -54,7 +54,7 @@
   width: 100%
 }
 
-#movieCard{ 
+.movieCard{ 
   margin: 100px;
   background-color: lightgray;
   height: 350px;
@@ -64,10 +64,11 @@
   margin-left: 120px;
 }
 
-#movieCard img{
+.movieCard img{
   height: 350px;
   width: 250px;
 }
+
 
 #recMovieCard{ 
   margin: 100px;

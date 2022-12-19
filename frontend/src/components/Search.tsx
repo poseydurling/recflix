@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { AutoComplete } from 'rsuite'
 import 'rsuite/dist/rsuite.min.css';
 import { fetchPoster } from "../controller/Media";
-
+export const TEXT_autocomplete = "search bar to type in movie title"
+export const TEXT_submitButton = "submit button to search for a movie"
 //https://rsuitejs.com/components/auto-complete/
 //https://blog.devgenius.io/getting-started-with-react-development-with-the-react-suite-library-autocomplete-and-toggle-169701dbb8c7
 
@@ -32,12 +33,12 @@ export default function Search({setMovie1, setMovie2, setMovie3}: SearchProps) {
 
     useEffect(() => {
         finalName()
-    })
+    }, [])
 
     return (
         <div>
-            <AutoComplete style={{ width: '100%' }} id="search-box" placeholder="Enter a movie title here!" data={titleList} aria-label = "search bar to type in movie title" value={input} onChange={handleInputChange} />
-            <button type="submit" id="submit1" aria-label = "submit button to search for a movie" onClick={async () => {
+            <AutoComplete style={{ width: '100%' }} id="search-box" placeholder="Enter a movie title here!" data={titleList} aria-label = {TEXT_autocomplete} value={input} onChange={handleInputChange} />
+            <button type="submit" id="submit1" aria-label = {TEXT_submitButton} onClick={async () => {
                 await buildRecommendationsbySearch(input);
                 const posterPath = await fetchPoster(input, count);
                 if(count == 0){
