@@ -44,22 +44,16 @@
   font-weight: bold;
 }
 
+#weRecommend {
+  font-size: 25px;
+  color: navy;
+  text-align: center;
+  font-weight: bold;
+}
+
 #search-box {
   width: 100%
 }
-
-/* https://rasleen0209.medium.com/styling-a-react-component-using-flexbox-b0f7f73d21b1 
-flexbox with react*/
-
-/* .movieCard{ 
-  margin: 100px;
-  background-color: lightgray;
-  height: 350px;
-  margin-top: 60px;
-  width: 250px;
-  float: left;
-  margin-left: 120px;
-} */
 
 #movieCard{ 
   margin: 100px;
@@ -76,20 +70,13 @@ flexbox with react*/
   width: 250px;
 }
 
-#trashIcon{
-  margin: 100px;
-  background-color: white;
-  border: none;
-  height: 25;
-  /* margin-top: 480px; */
-  width: 250px;
-  float: left;
-  margin-left: 120px;
-}
-
 #recommendButton{
   position: absolute;
   bottom: 0;
   left: 45%;
 }
 
+#nextButton {
+  position: absolute;
+  left: 48.5%;
+}

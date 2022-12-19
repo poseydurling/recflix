@@ -31,7 +31,7 @@ function Form() {
     <div className="App">
       <NavBar></NavBar>
       <br></br>
-      <div> movies you are in the mood to watch!</div>
+      <div> Enter 1 to 3 movies you are in the mood to watch!</div>
       <br></br>
       <Search setMovie1={handleChange1} setMovie2={handleChange2} setMovie3={handleChange3}  />
       <div className='movieCards'>
@@ -39,7 +39,7 @@ function Form() {
         <Movie movieMetaData={movie2} />
         <Movie movieMetaData={movie3} />
       </div>
-      <RecommendButton></RecommendButton>
+      <RecommendButton/>
     </div>
   );
 }

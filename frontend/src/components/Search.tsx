@@ -17,12 +17,7 @@ interface SearchProps {
     setMovie3: (name: string, posterPath : string) => void
 }
 
-interface MovieInterface {
-    movieName : string
-}
-
 export default function Search({setMovie1, setMovie2, setMovie3}: SearchProps) {
-    const [movieList, setMList] = useState<MovieInterface[]>([]);
     const [titleList, setTitleList] = useState(['']);
     const [input, setInput] = useState('');
 
@@ -48,18 +43,12 @@ export default function Search({setMovie1, setMovie2, setMovie3}: SearchProps) {
                 if(count == 0){
                     setMovie1(input, posterPath);
                     count++
-                    console.log('INPUT', input)
-                    console.log("DEBUG 1")
-                    console.log("POSTER 1",  posterPath)
                 } else if (count == 1){
                     setMovie2(input, posterPath);
                     count++
-                    console.log('INPUT2', input)
-                    console.log('DEBUG 2')
-                    console.log("POSTER 2",  posterPath)
                 } else if (count == 2) {
                     setMovie3(input, posterPath);
-                    count = 0
+                    count++;
                 }
                 setInput("")
             }}>Search</button>

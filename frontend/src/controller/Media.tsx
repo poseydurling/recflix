@@ -4,15 +4,7 @@ import { movieID } from './Search'
 let finalID = 0
 
 let fetchPoster = async function (movieName: String, count: number) {
-  if(count == 0){
-     finalID = movieID[0]
-  }
-  else if (count == 1){
-    finalID = movieID[1]
-  } else if  (count == 2){
-    finalID = movieID[2]
-  }
-  const url = await 'https://api.themoviedb.org/3/movie/' + finalID + '?api_key=' + myKey + '&language=en-US&query=' + movieName;
+  const url = await 'https://api.themoviedb.org/3/movie/' + movieID[count] + '?api_key=' + myKey + '&language=en-US&query=' + movieName;
   const response: Response = await fetch(url);
   const data = await response.json();
   let poster_path = await data['poster_path']
