@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { recMovlist } from "./Search";
 import Movie, { MovieMetaData } from "../components/Movie";
 import { useState } from "react";
+import { myKey } from "../private/key";
 
 export default function RecommendButton() {
     const navigateToRecPage = useNavigate();
@@ -30,7 +31,7 @@ export async function sendPost(movieId: number[]){
 }
 
 export async function getMovieDetails(movid: number) {
-    const url = "https://api.themoviedb.org/3/movie/"+movid+"?api_key=ca80130f34859e4807faeca3729ca13e&language=en-US"
+    const url = "https://api.themoviedb.org/3/movie/"+movid+"?api_key="+myKey+"&language=en-US"
     const response = await fetch(url)
     const movieinfo = await response.json()
     return movieinfo
