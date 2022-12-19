@@ -69,9 +69,35 @@
   width: 250px;
 }
 
-
 #recMovieCard{ 
-  margin: 100px;
+  position: absolute;
+  left: 40%;
+  top: 30%;
+
+}
+
+#recMovieCard img{
+  height: 350px;
+  width: 250px;
+}
+
+#nextMovieCard{ 
+  margin: auto;
+  background-color: lightgray;
+  height: 350px;
+  margin-top: 60px;
+  width: 250px;
+  float: left;
+  margin-left: 350px;
+}
+
+#nextMovieCard img{
+  height: 350px;
+  width: 250px;
+}
+
+#recMovieCard2{ 
+  margin: auto;
   background-color: lightgray;
   height: 350px;
   margin-top: 60px;
@@ -80,7 +106,7 @@
   margin-left: 280px;
 }
 
-#recMovieCard img{
+#recMovieCard2 img{
   height: 350px;
   width: 250px;
 }
@@ -94,5 +120,11 @@
 #nextButton {
   position: absolute;
   top: 25;
-  margin-left: 4.5%;
+  margin-left: 47%;
+}
+
+#nextButton2 {
+  position: absolute;
+  top: 25;
+  margin-left: 10%;
 }

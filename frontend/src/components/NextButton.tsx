@@ -2,7 +2,7 @@ import { useState } from "react";
 import Movie, { MovieMetaData } from "./Movie";
 import { getMovieDetails } from "./RecommendButton";
 import { recMovlist } from "./Search";
-import RecMovie from "./RecMovie";
+import NextRecMovie from "./NextRecMovie";
 import React from "react";
 
 let count = 1;
@@ -29,10 +29,18 @@ export default function NextButton(){
                 count = count + 1;
                 console.log(count);
                 console.log(recId);
+                var card = document.getElementById('recMovieCard')
+                if(card != null){
+                    card.id = 'recMovieCard2'
+                }
+                var button = document.getElementById('nextButton');
+                if(button != null){
+                    button.id = 'nextButton2'
+                }
             }
         }
             >Next</button>
-        <RecMovie movieMetaData={nextRec}></RecMovie>
+        <NextRecMovie movieMetaData={nextRec}></NextRecMovie>
         </div>
     )
 }

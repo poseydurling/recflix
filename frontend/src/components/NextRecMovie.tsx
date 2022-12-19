@@ -5,17 +5,14 @@ export type MovieMetaData = {
 
 interface MovieProps {
     movieMetaData: MovieMetaData
-    id: string
 }
 
-
-export default function Movie({ movieMetaData, id } : MovieProps) {
+export default function Movie({ movieMetaData } : MovieProps) {
 
     return (
-
-        <div className="movieCard"id={id} aria-label = "movie poster and title information">
+        <div id="nextMovieCard" aria-label = "recommendation movie poster and title information">
             <img src={movieMetaData.posterPath}/>
-            {movieMetaData.name}
+            <center>{movieMetaData.name}</center>
         </div>
     )
 }
