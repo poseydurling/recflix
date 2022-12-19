@@ -31,13 +31,13 @@ function Form() {
     <div className="App">
       <NavBar></NavBar>
       <br></br>
-      <div> Enter 1 to 3 movies you are in the mood to watch!</div>
+      <div aria-label = "instructions to request for a recommendation"> Enter 1 to 3 movies you are in the mood to watch!</div>
       <br></br>
       <Search setMovie1={handleChange1} setMovie2={handleChange2} setMovie3={handleChange3}  />
-      <div className='movieCards'>
-        <Movie movieMetaData={movie1} />
-        <Movie movieMetaData={movie2} />
-        <Movie movieMetaData={movie3} />
+      <div className='movieCards' aria-label = "movies you want a recommendation for">
+        <Movie movieMetaData={movie1} aria-label = "first inputted movie"/>
+        <Movie movieMetaData={movie2} aria-label = "second inputted movie"/>
+        <Movie movieMetaData={movie3} aria-label = "third inputted movie"/>
       </div>
       <RecommendButton/>
     </div>

@@ -19,7 +19,7 @@ export default function NextButton(){
     }
     return (
         <div>
-            <button type="submit" id="nextButton" onClick={async () => {
+            <button type="submit" id="nextButton" aria-label = "submit button to request for another recommendation" onClick={async () => {
                 const recommendation = await getMovieDetails(recId[count]);
                 const recPosterPath=  "https://image.tmdb.org/t/p/original/" + recommendation.poster_path;
                 const recTitle = recommendation.original_title;

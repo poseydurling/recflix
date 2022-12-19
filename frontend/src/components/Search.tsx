@@ -36,8 +36,8 @@ export default function Search({setMovie1, setMovie2, setMovie3}: SearchProps) {
 
     return (
         <div>
-            <AutoComplete style={{ width: '100%' }} id="search-box" placeholder="Enter a movie title here!" data={titleList} value={input} onChange={handleInputChange} />
-            <button type="submit" id="submit1" onClick={async () => {
+            <AutoComplete style={{ width: '100%' }} id="search-box" placeholder="Enter a movie title here!" data={titleList} aria-label = "search bar to type in movie title" value={input} onChange={handleInputChange} />
+            <button type="submit" id="submit1" aria-label = "submit button to search for a movie" onClick={async () => {
                 await buildRecommendationsbySearch(input);
                 const posterPath = await fetchPoster(input, count);
                 if(count == 0){
