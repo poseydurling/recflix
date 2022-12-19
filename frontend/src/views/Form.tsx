@@ -31,7 +31,7 @@ function Form() {
     <div className="App">
       <NavBar></NavBar>
       <br></br>
-      <div aria-label = "instructions to request for a recommendation"> Enter 1 to 3 movies you are in the mood to watch!</div>
+      <div aria-label = "instructions to request for a recommendation"> Enter up to three movies you are in the mood to watch!</div>
       <br></br>
       <Search setMovie1={handleChange1} setMovie2={handleChange2} setMovie3={handleChange3}  />
       <div className='movieCards' aria-label = "movies you want a recommendation for">

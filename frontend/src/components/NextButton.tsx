@@ -2,11 +2,13 @@ import { useState } from "react";
 import Movie, { MovieMetaData } from "./Movie";
 import { getMovieDetails } from "./RecommendButton";
 import { recMovlist } from "./Search";
+import RecMovie from "./RecMovie";
+import React from "react";
 
 let count = 1;
 
 export default function NextButton(){
-    const[nextRec, setNextRec] = useState<MovieMetaData>({name: '', posterPath:'https://images.squarespace-cdn.com/content/v1/56031d09e4b0dc68f6197723/1469030770980-URDU63CK3Q4RODZYH0S1/Grey+Box.jpg?format=1500w'});
+    const[nextRec, setNextRec] = useState<MovieMetaData>({name: '', posterPath:'https://i.etsystatic.com/15699034/r/il/e4a135/1714398370/il_1588xN.1714398370_jy1z.jpg'});
 
     function handleChange(name: string, posterPath : string) {
         const newRec : MovieMetaData = {name : name, posterPath : posterPath}
@@ -30,59 +32,7 @@ export default function NextButton(){
             }
         }
             >Next</button>
-        <Movie movieMetaData={nextRec}></Movie>
+        <RecMovie movieMetaData={nextRec}></RecMovie>
         </div>
     )
 }
-
-// export default function NextButton() {
-//     const[displayData, setDisplayData] = useState<MovieMetaData>({name: '', posterPath:'https://images.squarespace-cdn.com/content/v1/56031d09e4b0dc68f6197723/1469030770980-URDU63CK3Q4RODZYH0S1/Grey+Box.jpg?format=1500w'});
-//       async function getMovieInformation(recId : number[]){
-//         newMovieRecID++
-//           if(newMovieRecID > recId.length-1){
-//                     alert("No more recommendations available!")
-//                     count = 0;
-//         }
-//         else {
-//             const recommendation = await getMovieDetails(recId[newMovieRecID])
-//             const recPosterPath=  "https://image.tmdb.org/t/p/original/" + recommendation.poster_path
-//             const recTitle = recommendation.original_title
-//             setDisplayData({name: recTitle, posterPath: recPosterPath})
- 
-//         }
-//     }
- 
-//     useEffect(() => {
-//         const getRecommendationInfo = async() => 
-//         {
-//             await getMovieInformation(recMovlist)
-//             console.log(recMovlist)
-        
-//         }
-//         getRecommendationInfo()
-//     }, [])
-
-//     if (count >= 2){
-//     return (
-//         <div>
-//             <button type="submit" id="getNewRecommendation"
-//                 onClick={() => {
-//                     count++
-//                     getMovieInformation(recMovlist);
-//                    }}>Give New Movie Rec</button>
-//                <Movie movieMetaData={displayData} ></Movie>
-//         </div>
-//     ) }
-//         else {
-//                     return (
-//                         <div>
-//                             <button type="submit" id="getNewRecommendation"
-//                                 onClick={() => {
-//                                     // history('/newRecommendationPage');
-//                                     count++
-//                                     getMovieInformation(recMovlist);
-//                                    }}>Give New Movie Rec</button>       
-//                         </div>
-//                     )
-//                 }
-// }

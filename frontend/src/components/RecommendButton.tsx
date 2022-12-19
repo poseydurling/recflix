@@ -1,7 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { recMovlist } from "./Search";
-import Movie, { MovieMetaData } from "../components/Movie";
-import { useState } from "react";
 import { myKey } from "../private/key";
 
 export default function RecommendButton() {

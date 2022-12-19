@@ -40,15 +40,14 @@
 #header {
   font-size: 75px;
   color: navy;
-  margin: auto;
+  margin: center;
   font-weight: bold;
 }
 
 #weRecommend {
-  font-size: 25px;
-  color: navy;
-  text-align: center;
-  font-weight: bold;
+  font-size: 18px;
+  color: grey;
+  margin-left: 250px;
 }
 
 #search-box {
@@ -70,6 +69,21 @@
   width: 250px;
 }
 
+#recMovieCard{ 
+  margin: 100px;
+  background-color: lightgray;
+  height: 350px;
+  margin-top: 60px;
+  width: 250px;
+  float: left;
+  margin-left: 280px;
+}
+
+#recMovieCard img{
+  height: 350px;
+  width: 250px;
+}
+
 #recommendButton{
   position: absolute;
   bottom: 0;
@@ -78,5 +92,6 @@
 
 #nextButton {
   position: absolute;
-  left: 48.5%;
+  top: 25;
+  margin-left: 4.5%;
 }
