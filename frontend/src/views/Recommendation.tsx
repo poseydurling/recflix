@@ -37,10 +37,10 @@ export default function Recommendation() {
 
   return (
     <div>
-        <NavBar></NavBar>
-        <WeRecommend></WeRecommend>
-        <Movie movieMetaData={displayData} ></Movie>
-        <NextButton ></NextButton>
+        <NavBar aria-label = "navigation bar"></NavBar>
+        <WeRecommend aria-label = "recommended movie"></WeRecommend>
+        <Movie movieMetaData={displayData} aria-label = "movie information"></Movie>
+        <NextButton aria-label = "button requesting another recommendation" ></NextButton>
     </div>
 )
 }

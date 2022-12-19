@@ -6,7 +6,7 @@ import { useState } from "react";
 export default function RecommendButton() {
     const navigateToRecPage = useNavigate();
     return (
-        <div>
+        <div aria-label = "submit button to request for a recommendation">
             <button type="submit" id="recommendButton"
                 onClick={async () => {
                     navigateToRecPage('/recommendation');
