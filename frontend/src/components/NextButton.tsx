@@ -22,20 +22,24 @@ export default function NextButton(){
     return (
         <div>
             <button type="submit" id="nextButton" aria-label = "submit button to request for another recommendation" onClick={async () => {
-                const recommendation = await getMovieDetails(recId[count]);
-                const recPosterPath=  "https://image.tmdb.org/t/p/original/" + recommendation.poster_path;
-                const recTitle = recommendation.original_title;
-                handleChange(recTitle, recPosterPath);
-                count = count + 1;
-                console.log(count);
-                console.log(recId);
-                var card = document.getElementById('recMovieCard')
-                if(card != null){
-                    card.id = 'recMovieCard2'
-                }
-                var button = document.getElementById('nextButton');
-                if(button != null){
-                    button.id = 'nextButton2'
+                    if(count < 10){
+                    const recommendation = await getMovieDetails(recId[count]);
+                    const recPosterPath=  "https://image.tmdb.org/t/p/original/" + recommendation.poster_path;
+                    const recTitle = recommendation.original_title;
+                    handleChange(recTitle, recPosterPath);
+                    count = count + 1;
+                    console.log(count);
+                    console.log(recId);
+                    var card = document.getElementById('recMovieCard')
+                    if(card != null){
+                        card.id = 'recMovieCard2'
+                    }
+                    var button = document.getElementById('nextButton');
+                    if(button != null){
+                        button.id = 'nextButton2'
+                    }
+                }else{
+                    alert("no more recommendations available!")
                 }
             }
         }
