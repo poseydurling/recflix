@@ -40,7 +40,6 @@ var dataDB: (DB | null) = null; //cache for master list of movies to ids
 export async function getMovieTitlesFromMap() {
   dataDB = await getAllMovies() as DB
   const keysOfProps = keys<DB>();
-  console.log(keysOfProps);
 }
 
 export async function updateExamples(title : string){
@@ -78,10 +77,7 @@ export async function getRecommendation(name: string) {
       return null;
     } else {
       const id = dataDB[name]
-      console.log("id: " + id)
-      console.log("MOVIEINDEX: " + movieIndex)
       movieID[movieIndex] = id
-      console.log("set movieID to" + movieID)
 
       //The following checks to make sure there are 3 movies is not based on number of 
       //clicks on the search button but rather the search button triggers the

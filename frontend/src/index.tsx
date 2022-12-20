@@ -9,7 +9,6 @@ import Form from './views/Form';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
-console.log("Check if rendeirng is being called here");
 root.render(
   <React.StrictMode>
     <App/>

@@ -40,8 +40,6 @@ export default function NextButton(){
                     const recTitle = recommendation.original_title;
                     handleChange(recTitle, recPosterPath);
                     count = count + 1;
-                    console.log(count);
-                    console.log(recId);
                     var card = document.getElementById('recMovieCard')
                     if(card != null){
                         card.id = 'recMovieCard2'
