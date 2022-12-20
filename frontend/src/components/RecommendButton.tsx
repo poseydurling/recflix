@@ -1,6 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { myKey } from "../private/key";
 
+
+/**
+ * When the recommend button is clicked, we naviagte to our next view/page which contains the recommended movie based on the user's input
+ * @returns a react component button
+ */
 export default function RecommendButton() {
     const navigateToRecPage = useNavigate();
     return (

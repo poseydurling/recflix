@@ -7,9 +7,18 @@ import { getMovieDetails } from '../components/RecommendButton';
 import { recMovlist } from "../components/Search";
 import WeRecommend from '../components/WeRecommend';
 
+
+/**
+ * 
+ * @returns our recommendation page component which contains the recommended movie from the user's inputs, and a next button which users can click
+ * to get a new recommendation
+ */
 export default function Recommendation() {
+  // useState that sets the posterPath with our recommendation generated from the user's inputs
     const[displayData, setDisplayData] = useState<MovieMetaData>({name: ' ', posterPath:' '});
 
+    // function that gets the first recommendation from the list of recommednations we generate based on the user's 3 inputted movies, 
+    // and displays our first recommendation's title and poster path
     async function getMovieInformation(recId : number[]){
       if(recId.length < 3)
       {

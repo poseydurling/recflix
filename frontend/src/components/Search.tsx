@@ -17,9 +17,16 @@ interface SearchProps {
     setMovie2: (name: string, posterPath : string) => void
     setMovie3: (name: string, posterPath : string) => void
 }
-
+/**
+ * 
+ * @param param0 3 moive component props which take in the image path of the user's 3 inputted movies
+ * @returns 3 movie components which display the user's inputted movie's poster paths when the user clicks search button
+ */
 export default function Search({setMovie1, setMovie2, setMovie3}: SearchProps) {
+  
+    //use state that is used to update the autocomplete options for the movies in our searchbar as the user types
     const [titleList, setTitleList] = useState(['']);
+    // useState that updates the user's moive inputs on button click
     const [input, setInput] = useState('');
 
     const finalName = async () => {
@@ -35,8 +42,11 @@ export default function Search({setMovie1, setMovie2, setMovie3}: SearchProps) {
         finalName()
     }, [])
 
+    // the autcomplete component is updated through the titleList useState as the user types
+    // once the user hits "search" after selecting a movie, the user's inputted movies are displayed on the screen and the movies id's are 
+    //added to a list which will be used to build a recommendation for them 
     return (
-        <div>
+        <div> 
             <AutoComplete style={{ width: '100%' }} id="search-box" placeholder="Enter a movie title here!" data={titleList} aria-label = {TEXT_autocomplete} value={input} onChange={handleInputChange} />
             <button type="submit" id="submit1" aria-label = {TEXT_submitButton} onClick={async () => {
                 await buildRecommendationsbySearch(input);

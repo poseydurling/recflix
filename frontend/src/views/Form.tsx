@@ -6,8 +6,15 @@ import { useState } from 'react'
 import Movie from '../components/Movie'
 import { MovieMetaData } from "../components/Movie";
 
+/** Function renders our site's layout with the searchBar and movie components
+ * 
+ * @returns the movieCard components that appear when our site is first rendered, the search component which contains our searchBar, our NavBar 
+ * component which displays our site's name
+ */
+
+
 function Form() {
-  
+  //useStates that update the movieComponents with the moive names and posterPaths of the movies the users input
   const [movie1, setMovie1] = useState<MovieMetaData>({name: '', posterPath: 'https://images.squarespace-cdn.com/content/v1/56031d09e4b0dc68f6197723/1469030770980-URDU63CK3Q4RODZYH0S1/Grey+Box.jpg?format=1500w'});
   const [movie2, setMovie2] = useState<MovieMetaData>({name: '', posterPath: 'https://images.squarespace-cdn.com/content/v1/56031d09e4b0dc68f6197723/1469030770980-URDU63CK3Q4RODZYH0S1/Grey+Box.jpg?format=1500w'});
   const [movie3, setMovie3] = useState<MovieMetaData>({name: '', posterPath: 'https://images.squarespace-cdn.com/content/v1/56031d09e4b0dc68f6197723/1469030770980-URDU63CK3Q4RODZYH0S1/Grey+Box.jpg?format=1500w'});

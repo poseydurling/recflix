@@ -7,6 +7,11 @@ interface MovieProps {
     movieMetaData: MovieMetaData
 }
 
+/**
+ * 
+ * @param param0 movieMetaData which sets a movie's name and poster path
+ * @returns movie component with the poster path of the recommended movie 
+ */
 export default function Movie({ movieMetaData } : MovieProps) {
 
     return (

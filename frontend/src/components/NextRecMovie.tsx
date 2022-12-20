@@ -6,6 +6,11 @@ export type MovieMetaData = {
 interface MovieProps {
     movieMetaData: MovieMetaData
 }
+/**
+ * 
+ * @param param0 movieMetaData
+ * @returns a Movie component which sets the image for the next recommednde movie
+ */
 
 export default function Movie({ movieMetaData } : MovieProps) {
 
