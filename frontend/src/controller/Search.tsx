@@ -3,11 +3,12 @@ import { keys } from 'ts-transformer-keys';
 
 let examples: number[] = [];
 
+//database interface that's used to deserialize fetch outputs
 interface DB {
   [name: string]: number;
 }
 
-//Gets a master list of all movie titles to IDs
+//Gets a master list of all movie titles to IDs from the backend server's titles_to_ids endpoint
 export async function getAllMovies() {
   const response = await fetch('http://127.0.0.1:5000/titles_to_ids/', {
     mode: 'cors',
@@ -30,10 +31,11 @@ export async function getMovieTitleList() {
   return Object.keys(moviedata.data);
 }
 
+//variable declarations
 export let movieID = [0, 0, 0]; //Three user inputted movie IDs
 let movieIndex = 0; //MovieID index
 let movieCount = 0; //Counts the number of searched movies
-var dataDB: (DB | null) = null;
+var dataDB: (DB | null) = null; //cache for master list of movies to ids
 
 export async function getMovieTitlesFromMap() {
   dataDB = await getAllMovies() as DB
@@ -56,6 +58,8 @@ export async function updateExamples(title : string){
   return examples;
 }
 
+//This is the getRecommendation() function that takes in a varibale name of type string through its parameters. 
+//It is responsible for sending a post request and getting the output of recommended movies from the backend.
 export async function getRecommendation(name: string) {
   //If there's no user input --> alert user
   if (name === "") {
@@ -81,7 +85,7 @@ export async function getRecommendation(name: string) {
 
       //The following checks to make sure there are 3 movies is not based on number of 
       //clicks on the search button but rather the search button triggers the
-      //fetches that populate the movieID list and based on what's in that list
+      //fetches that populate the movieID list and based on what's in that list,
       //we check to see if three movies have been inputted.
 
       //Checks to make sure that user inputs three movies based on indices of array

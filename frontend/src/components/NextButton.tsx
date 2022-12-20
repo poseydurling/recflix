@@ -15,6 +15,7 @@ export default function NextButton(){
         setNextRec(newRec);
     }
 
+    //checks to make sure that at least 3 movies are inputted by the user
     let recId = recMovlist;
     if(recId.length < 3){
         alert("please search at least 3 movies first!")
@@ -22,6 +23,7 @@ export default function NextButton(){
     return (
         <div>
             <button type="submit" id="nextButton" aria-label = "submit button to request for another recommendation" onClick={async () => {
+                    //check count value and alert the user if they request for an 11th recommendation
                     if(count < 10){
                     const recommendation = await getMovieDetails(recId[count]);
                     const recPosterPath=  "https://image.tmdb.org/t/p/original/" + recommendation.poster_path;
@@ -39,6 +41,7 @@ export default function NextButton(){
                         button.id = 'nextButton2'
                     }
                 }else{
+                    //throw alert that there's no more available recommendations
                     alert("no more recommendations available!")
                 }
             }

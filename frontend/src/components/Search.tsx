@@ -57,7 +57,9 @@ export default function Search({setMovie1, setMovie2, setMovie3}: SearchProps) {
     )
 }
 
-//Builds the movie ID lists recommended from the 3 searched titles. Used when clicking the recommendation button
+//This is the buildRecommendationsbySearch() function that takes in variable search of type string. 
+//It is responsible for building the movie ID lists recommended from the 3 searched titles and used 
+//when clicking the recommendation button.
 async function buildRecommendationsbySearch(search: string) {
     const reclist = await getRecommendation(search)
 
