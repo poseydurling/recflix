@@ -26,16 +26,9 @@ This is the frontend of our Movie Recommender project. It is responsible for cre
 
 ### `Configuration`
 - To run the program :
-    - install npm
-    - install ...
+    - run 'npm install'
+    - run 'npm i rsuite' (our autocomplete is based on this library!)
 
 - To run tests:
-    - make sure you have npm installed
     - navigate into the frontend folder
     - run "npm test" in the terminal
-
-
-
-
-
-
