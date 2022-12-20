@@ -8,7 +8,7 @@ import React from "react";
 let count = 1;
 
 export default function NextButton(){
-    const[nextRec, setNextRec] = useState<MovieMetaData>({name: '', posterPath:'https://i.etsystatic.com/15699034/r/il/e4a135/1714398370/il_1588xN.1714398370_jy1z.jpg'});
+    const[nextRec, setNextRec] = useState<MovieMetaData>({name: '', posterPath:'https://upload.wikimedia.org/wikipedia/commons/5/50/Black_colour.jpg'});
 
     function handleChange(name: string, posterPath : string) {
         const newRec : MovieMetaData = {name : name, posterPath : posterPath}

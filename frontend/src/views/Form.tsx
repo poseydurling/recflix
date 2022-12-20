@@ -29,9 +29,10 @@ function Form() {
 
   return (
     <div className="App">
+      <style>{'body { background-color: black; }'}</style>
       <NavBar></NavBar>
       <br></br>
-      <div aria-label = "instructions to request for a recommendation"> Enter up to three movies you are in the mood to watch!</div>
+      <div aria-label = "instructions to request for a recommendation" style={{color: 'white'}}>  Enter up to three movies you are in the mood to watch!</div>
       <br></br>
       <Search setMovie1={handleChange1} setMovie2={handleChange2} setMovie3={handleChange3}  />
       <div className='movieCards' aria-label = "movies you want a recommendation for">

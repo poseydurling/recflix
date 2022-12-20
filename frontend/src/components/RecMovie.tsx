@@ -10,7 +10,7 @@ interface MovieProps {
 export default function Movie({ movieMetaData } : MovieProps) {
 
     return (
-        <div id="recMovieCard" aria-label = "recommendation movie poster and title information">
+        <div style={{color: 'white'}} id="recMovieCard" aria-label = "recommendation movie poster and title information">
             <img src={movieMetaData.posterPath}/>
             <center>{movieMetaData.name}</center>
         </div>

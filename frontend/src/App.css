@@ -14,14 +14,14 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: darkgrey;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: darkgrey;
 }
 
 .App-link {
@@ -39,18 +39,20 @@
 
 #header {
   font-size: 75px;
-  color: navy;
+  color: red;
   margin: center;
   font-weight: bold;
 }
 
 #weRecommend {
   font-size: 18px;
-  color: grey;
+  color: white;
   margin-left: 250px;
 }
 
 #search-box {
+  background-color: black;
+  border-color: white;
   width: 100%
 }
 
@@ -115,16 +117,27 @@
   position: absolute;
   bottom: 0;
   left: 45%;
+  background-color: lightgrey;
+  border-color: white;
 }
 
 #nextButton {
   position: absolute;
   top: 25;
   margin-left: 47%;
+  background-color: lightgrey;
+  border-color: white;
 }
 
 #nextButton2 {
   position: absolute;
   top: 25;
-  margin-left: 10%;
+  margin-left: 11%;
+  background-color: lightgrey;
+  border-color: white;
+}
+
+#submit1{
+  background-color: lightgrey;
+  border-color: white;
 }

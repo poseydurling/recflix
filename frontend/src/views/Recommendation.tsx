@@ -31,6 +31,7 @@ export default function Recommendation() {
 
   return (
     <div>
+      <style>{'body { background-color: black; }'}</style>
         <NavBar aria-label = "navigation bar"></NavBar>
         <WeRecommend aria-label = "recommended movie"></WeRecommend>
         <RecMovie movieMetaData={displayData} aria-label = "movie information"></RecMovie>
